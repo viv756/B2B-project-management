@@ -19,8 +19,11 @@ export const loginOrCreateAccountService = async (data: {
   const session = await mongoose.startSession();
 
   try {
+    session.startTransaction();
+    console.log("Session started");
+
     let user = await UserModel.findOne({ email }).session(session);
-    
+
     if (!user) {
       user = new UserModel({
         email,
