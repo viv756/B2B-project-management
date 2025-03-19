@@ -25,6 +25,7 @@ export const loginOrCreateAccountService = async (data: {
     let user = await UserModel.findOne({ email }).session(session);
 
     if (!user) {
+      // step 1: create new User
       user = new UserModel({
         email,
         name: displayName,
@@ -39,6 +40,7 @@ export const loginOrCreateAccountService = async (data: {
       });
       await account.save({ session });
 
+      // step 2: create workspace for new User
       const workspace = new WorkspaceModel({
         name: `My Workspace`,
         description: `Workspace created for ${user.name}`,
@@ -54,6 +56,7 @@ export const loginOrCreateAccountService = async (data: {
         throw new NotFoundException("Owner role not found");
       }
 
+      // step 3: create Member model
       const member = new MemberModel({
         userId: user._id,
         workspaceId: workspace._id,
@@ -66,6 +69,7 @@ export const loginOrCreateAccountService = async (data: {
       await user.save({ session });
     }
 
+    // commit the transaction
     await session.commitTransaction();
     session.endSession();
     console.log("End Session...");
