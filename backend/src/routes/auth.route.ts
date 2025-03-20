@@ -19,6 +19,7 @@ authRoutes.get(
   passport.authenticate("google", {
     failureRedirect: failedUrl,
   }),
+  // If successful passing control to googleLoginCallback control
   googleLoginCallback
 );
 

@@ -24,6 +24,7 @@ passport.use(
           throw new NotFoundException("Google ID (sub) is missing");
         }
 
+        // To create or login send data to service
         const { user } = await loginOrCreateAccountService({
           provider: ProviderEnum.GOOGLE,
           displayName: profile.displayName,
