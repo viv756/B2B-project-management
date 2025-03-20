@@ -16,13 +16,13 @@ export const googleLoginCallback = asyncHandler(async (req: Request, res: Respon
 });
 
 export const registerUserController = asyncHandler(async (req: Request, res: Response) => {
+  // validate using Zod
   const body = registerSchema.parse({
     ...req.body,
   });
 
-  await registerUserService(body)
-
+  await registerUserService(body);
   res.status(HTTPSTATUS.CREATED).json({
-    message:"User created successfully"
-  })
+    message: "User created successfully",
+  });
 });
