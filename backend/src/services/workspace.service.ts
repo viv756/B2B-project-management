@@ -40,5 +40,8 @@ export const createWorkspaceService = async (
   });
   await member.save();
 
+  user.currentWorkspace = workspace._id as mongoose.Types.ObjectId;
+  await user.save();
+
   return { workspace };
 };
