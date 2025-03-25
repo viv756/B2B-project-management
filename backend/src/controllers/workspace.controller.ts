@@ -94,7 +94,7 @@ export const changeWorkspaceMemberRoleController = asyncHandler(
   async (req: Request, res: Response) => {
     const workspaceId = workspaceIdSchema.parse(req.params.id);
     const { memberId, roleId } = changeRoleSchema.parse(req.body);
-    
+
     const userId = req.user?._id;
 
     // find the role of the user in the workspace
