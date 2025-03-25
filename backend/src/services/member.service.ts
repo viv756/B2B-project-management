@@ -29,26 +29,23 @@ export const getMemberRoleInWorkspace = async (userId: string, workspaceId: stri
 };
 
 export const joinWokspaceControllerService = async (userId: string, inviteCode: string) => {
-
   // find the workspace by inviteCode
   const workspace = await WorkspaceModel.findOne({ inviteCode }).exec();
   if (!workspace) {
     throw new NotFoundException("Invalid invite code or workspace not found");
   }
 
-  // check the user is already a member in the workspace 
+  // check the user is already a member in the workspace
   const existingMember = await MemberModel.findOne({
     userId,
     workspaceId: workspace._id,
   }).exec();
-
   if (existingMember) {
     throw new BadRequestException("You are already a member of this workspace");
   }
 
-  // save user as a member in the workspace 
+  // save user as a member in the workspace
   const role = await RoleModel.findOne({ name: Roles.MEMBER });
-
   if (!role) {
     throw new NotFoundException("Role not found");
   }
