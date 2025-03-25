@@ -1,8 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { asyncHandler } from "../middlewares/asyncHandler.middleware";
-import { createWorkspaceSchema, workspaceIdSchema } from "../validation/workspace.validation";
+import {
+  changeRoleSchema,
+  createWorkspaceSchema,
+  workspaceIdSchema,
+} from "../validation/workspace.validation";
 import { HTTPSTATUS } from "../config/http.config";
 import {
+  changeMemberRoleService,
   createWorkspaceService,
   getAllWorkspacesUserIsMemberService,
   getWorkspaceAnalyticsService,
@@ -84,3 +89,24 @@ export const getWorkspaceAnalyticsController = asyncHandler(async (req: Request,
     analytics,
   });
 });
+
+export const changeWorkspaceMemberRoleController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const workspaceId = workspaceIdSchema.parse(req.params.id);
+    const { memberId, roleId } = changeRoleSchema.parse(req.body);
+    
+    const userId = req.user?._id;
+
+    // find the role of the user in the workspace
+    const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
+    // check the role has necessary permission to chage the role
+    roleGuard(role, [Permissions.CHANGE_MEMBER_ROLE]);
+
+    const { member } = await changeMemberRoleService(workspaceId, memberId, roleId);
+
+    return res.status(HTTPSTATUS.OK).json({
+      message: "Member Role changed successfully",
+      member,
+    });
+  }
+);
