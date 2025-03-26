@@ -10,6 +10,7 @@ import { HTTPSTATUS } from "../config/http.config";
 import {
   changeMemberRoleService,
   createWorkspaceService,
+  deleteWorkspaceService,
   getAllWorkspacesUserIsMemberService,
   getWorkspaceAnalyticsService,
   getWorkspaceByIdService,
@@ -136,6 +137,8 @@ export const deleteWorkspaceController = asyncHandler(async (req: Request, res: 
   const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
   roleGuard(role, [Permissions.DELETE_WORKSPACE]);
 
+  await deleteWorkspaceService(userId, workspaceId);
+  
   return res.status(HTTPSTATUS.OK).json({
     message: "Workspace deleted successfully",
   });

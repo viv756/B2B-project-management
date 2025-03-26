@@ -4,7 +4,7 @@ import MemberModel from "../models/members.model";
 import RoleModel from "../models/roles-permission.model";
 import UserModel from "../models/user.model";
 import WorkspaceModel from "../models/workspace.model";
-import { NotFoundException } from "../utils/appError";
+import { BadRequestException, NotFoundException } from "../utils/appError";
 import TaskModel from "../models/task.model";
 import { TaskStatusEnum } from "../enums/task.enums";
 
@@ -161,4 +161,21 @@ export const updateWorkspaceByIdService = async (
   await workspace.save();
 
   return { workspace };
+};
+
+export const deleteWorkspaceService = async (userId: string, workspaceId: string) => {
+  const workspace = await WorkspaceModel.findById(workspaceId);
+  if (!workspace) {
+    throw new NotFoundException("Workspace not found");
+  }
+
+  // check the user is the owner
+  if (workspace.owner.toString() !== userId) {
+    throw new BadRequestException(
+      "You are not authorized to delete this workspace"
+    );
+  }
+
+  await workspace.deleteOne()
+
 };
