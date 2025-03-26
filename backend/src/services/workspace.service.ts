@@ -7,6 +7,7 @@ import WorkspaceModel from "../models/workspace.model";
 import { BadRequestException, NotFoundException } from "../utils/appError";
 import TaskModel from "../models/task.model";
 import { TaskStatusEnum } from "../enums/task.enums";
+import ProjectModel from "../models/projects.model";
 
 export const createWorkspaceService = async (
   userId: string,
@@ -164,18 +165,55 @@ export const updateWorkspaceByIdService = async (
 };
 
 export const deleteWorkspaceService = async (userId: string, workspaceId: string) => {
-  const workspace = await WorkspaceModel.findById(workspaceId);
-  if (!workspace) {
-    throw new NotFoundException("Workspace not found");
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const workspace = await WorkspaceModel.findById(workspaceId).session(session);
+    if (!workspace) {
+      throw new NotFoundException("Workspace not found");
+    }
+
+    // check the user is the owner
+    if (workspace.owner.toString() !== userId) {
+      throw new BadRequestException("You are not authorized to delete this workspace");
+    }
+
+    const user = await UserModel.findById(userId).session(session);
+    if (!user) {
+      throw new NotFoundException("User not found");
+    }
+
+    // delete all projects that assosiated with the workspace
+    await ProjectModel.deleteMany({ workspace: workspace._id }).session(session);
+
+    // delete all tasks that assosiated with the workspace
+    await TaskModel.deleteMany({ workspace: workspace._id }).session(session);
+
+    // delete all the members in the workspace
+    await MemberModel.deleteMany({ workspaceId: workspace._id }).session(session);
+
+    // Update the user's currentWorkspace if it matches the deleted workspace
+    if (user?.currentWorkspace?.equals(workspaceId)) {
+      const memberWorkspace = await MemberModel.findOne({ userId }).session(session);
+      // update the user's currentWorkspace
+      user.currentWorkspace = memberWorkspace ? memberWorkspace.workspaceId : null;
+
+      await user.save({ session });
+    }
+
+    await workspace.deleteOne({ session });
+
+    await session.commitTransaction();
+
+    session.endSession();
+
+    return {
+      currentWorkspace: user.currentWorkspace,
+    };
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+    throw error;
   }
-
-  // check the user is the owner
-  if (workspace.owner.toString() !== userId) {
-    throw new BadRequestException(
-      "You are not authorized to delete this workspace"
-    );
-  }
-
-  await workspace.deleteOne()
-
 };
