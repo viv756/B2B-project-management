@@ -69,6 +69,7 @@ export const getProjectAnalyticsService = async (projectId: string, workspaceId:
 
   const currentDate = new Date();
 
+  // Using mongoose aggregate
   const taskAnalytics = await TaskModel.aggregate([
     {
       $match: {

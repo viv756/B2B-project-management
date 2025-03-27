@@ -95,4 +95,3 @@ export const getProjectAnalyticsController = asyncHandler(async (req: Request, r
     analytics,
   });
 });
-
