@@ -5,7 +5,12 @@ import { createProjectSchema, projectIdSchema } from "../validation/project.vali
 import { getMemberRoleInWorkspace } from "../services/member.service";
 import { roleGuard } from "../utils/roleGuard";
 import { Permissions } from "../enums/role.enum";
-import { createProjectService, getProjectByIdAndWorkspaceIdService, getProjectsInWorkspaceService } from "../services/project.service";
+import {
+  createProjectService,
+  getProjectAnalyticsService,
+  getProjectByIdAndWorkspaceIdService,
+  getProjectsInWorkspaceService,
+} from "../services/project.service";
 import { HTTPSTATUS } from "../config/http.config";
 
 export const createProjectController = asyncHandler(async (req: Request, res: Response) => {
@@ -73,3 +78,21 @@ export const getProjectByIdAndWorkspaceIdController = asyncHandler(
     });
   }
 );
+
+export const getProjectAnalyticsController = asyncHandler(async (req: Request, res: Response) => {
+  const projectId = projectIdSchema.parse(req.params.id);
+  const workspaceId = workspaceIdSchema.parse(req.params.workspaceId);
+
+  const userId = req.user?._id;
+
+  const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
+  roleGuard(role, [Permissions.VIEW_ONLY]);
+
+  const { analytics } = await getProjectAnalyticsService(projectId, workspaceId);
+
+  return res.status(HTTPSTATUS.OK).json({
+    message: "Project analytics retrieved successfully",
+    analytics,
+  });
+});
+
