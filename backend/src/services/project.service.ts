@@ -46,7 +46,7 @@ export const getProjectByIdAndWorkspaceIdService = async (
   projectId: string,
   workspaceId: string
 ) => {
-  const project = await ProjectModel.find({ _id: projectId, workspace: workspaceId }).select(
+  const project = await ProjectModel.findOne({ _id: projectId, workspace: workspaceId }).select(
     "_id emoji name description"
   );
 
