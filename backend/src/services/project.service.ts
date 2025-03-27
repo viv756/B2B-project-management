@@ -78,7 +78,7 @@ export const getProjectAnalyticsService = async (projectId: string, workspaceId:
     {
       $facet: {
         totalTasks: [{ $count: "count" }],
-        overduetasks: [
+        overdueTasks: [
           {
             $match: {
               dueDate: { $lt: currentDate },
