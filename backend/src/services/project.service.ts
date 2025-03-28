@@ -136,7 +136,24 @@ export const updateProjectService = async (
   if (name) project.name = name;
   if (description) project.description = description;
 
-  await project.save()
+  await project.save();
 
-  return {project}
+  return { project };
+};
+
+export const deleteProjectService = async (workspaceId: string, projectId: string) => {
+  const project = await ProjectModel.findOne({
+    _id: projectId,
+    workspace: workspaceId,
+  });
+
+  if (!project) {
+    throw new NotFoundException("Project not found or does not belong to the specified workspace");
+  }
+
+  await project.deleteOne();
+
+  await TaskModel.deleteMany({ project: project._id });
+
+  return { project };
 };

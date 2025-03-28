@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createProjectController,
+  deleteProjectController,
   getAllProjectsInWorkspaceController,
   getProjectAnalyticsController,
   getProjectByIdAndWorkspaceIdController,
@@ -18,5 +19,7 @@ projectRoutes.get("/workspace/:workspaceId/all", getAllProjectsInWorkspaceContro
 projectRoutes.get("/:id/workspace/:workspaceId", getProjectByIdAndWorkspaceIdController);
 
 projectRoutes.get("/:id/workspace/:workspaceId/analytics", getProjectAnalyticsController);
+
+projectRoutes.get("/:id/workspace/:workspaceId/delete", deleteProjectController);
 
 export default projectRoutes;
