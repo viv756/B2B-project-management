@@ -6,7 +6,13 @@ import { projectIdSchema } from "../validation/project.validation";
 import { getMemberRoleInWorkspace } from "../services/member.service";
 import { roleGuard } from "../utils/roleGuard";
 import { Permissions } from "../enums/role.enum";
-import { createTaskService, getAllTasksService, getTaskByIdService, updateTaskService } from "../services/task.service";
+import {
+  createTaskService,
+  deleteTaskService,
+  getAllTasksService,
+  getTaskByIdService,
+  updateTaskService,
+} from "../services/task.service";
 import { HTTPSTATUS } from "../config/http.config";
 
 export const createTaskController = asyncHandler(async (req: Request, res: Response) => {
@@ -77,22 +83,36 @@ export const getAllTasksController = asyncHandler(async (req: Request, res: Resp
   });
 });
 
-export const getTaskByIdController = asyncHandler(
-  async (req: Request, res: Response) => {
-    const userId = req.user?._id;
+export const getTaskByIdController = asyncHandler(async (req: Request, res: Response) => {
+  const userId = req.user?._id;
 
-    const taskId = taskIdSchema.parse(req.params.id);
-    const projectId = projectIdSchema.parse(req.params.projectId);
-    const workspaceId = workspaceIdSchema.parse(req.params.workspaceId);
+  const taskId = taskIdSchema.parse(req.params.id);
+  const projectId = projectIdSchema.parse(req.params.projectId);
+  const workspaceId = workspaceIdSchema.parse(req.params.workspaceId);
 
-    const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
-    roleGuard(role, [Permissions.VIEW_ONLY]);
+  const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
+  roleGuard(role, [Permissions.VIEW_ONLY]);
 
-    const task = await getTaskByIdService(workspaceId, projectId, taskId);
+  const task = await getTaskByIdService(workspaceId, projectId, taskId);
 
-    return res.status(HTTPSTATUS.OK).json({
-      message: "Task fetched successfully",
-      task,
-    });
-  }
-);
+  return res.status(HTTPSTATUS.OK).json({
+    message: "Task fetched successfully",
+    task,
+  });
+});
+
+export const deleteTaskController = asyncHandler(async (req: Request, res: Response) => {
+  const userId = req.user?._id;
+
+  const taskId = taskIdSchema.parse(req.params.id);
+  const workspaceId = workspaceIdSchema.parse(req.params.workspaceId);
+
+  const { role } = await getMemberRoleInWorkspace(userId, workspaceId);
+  roleGuard(role, [Permissions.DELETE_TASK]);
+
+  await deleteTaskService(workspaceId, taskId);
+
+  return res.status(HTTPSTATUS.OK).json({
+    message: "Task deleted successfully",
+  });
+});
