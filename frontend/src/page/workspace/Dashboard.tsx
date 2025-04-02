@@ -1,7 +1,7 @@
 import React from "react";
 
-const Dashboard = () => {
-  return <div>Dashboard</div>;
+const WorkspaceDashboard = () => {
+  return <div>Workspace</div>;
 };
 
-export default Dashboard;
+export default WorkspaceDashboard;
