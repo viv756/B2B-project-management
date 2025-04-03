@@ -12,13 +12,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const {
-    data: authData,
-    error: authError,
-    isLoading,
-    isFetching,
-  
-  } = useAuth();
+  const { data: authData, error: authError, isLoading, isFetching } = useAuth();
 
   const user = authData?.user;
 
