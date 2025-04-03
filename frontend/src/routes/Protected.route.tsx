@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom"
 
-const user = true
+const user = false
 
 const ProtectedRoute = () => {
-  return user ? <Outlet/> : <Navigate to='/' replace/>
+  return user ? <Outlet/> : <Navigate to='/'/>
 }
 
 export default ProtectedRoute

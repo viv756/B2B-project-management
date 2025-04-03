@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-
 const SignIn = () => {
   const formSchema = z.object({
     email: z.string().trim().email("Invalid email address").min(1, {

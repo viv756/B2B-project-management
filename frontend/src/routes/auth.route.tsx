@@ -3,7 +3,7 @@ import {  Navigate, Outlet } from "react-router-dom";
 const user = true
 
 const AuthRoute = () => {
-  if (user) {
+  if (!user) {
     return <Navigate to={'/workspace'}/>
   }
   return <Outlet />;
