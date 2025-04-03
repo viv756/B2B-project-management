@@ -1,4 +1,4 @@
-import { LoginResponseType, loginType } from "@/types/api.types";
+import { CurrentUserResponseType, LoginResponseType, loginType } from "@/types/api.types";
 import API from "./axios.client";
 
 export const loginMutationFn = async (
@@ -7,3 +7,9 @@ export const loginMutationFn = async (
   const response = await API.post("/auth/login", data);
   return response.data;
 };
+
+export const getCurrentUserQueryFn =
+  async (): Promise<CurrentUserResponseType> => {
+    const response = await API.get(`/user/current`);
+    return response.data;
+  };

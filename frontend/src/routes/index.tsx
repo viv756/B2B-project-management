@@ -4,6 +4,7 @@ import { authenticationRoutePaths, baseRoutePaths, protectedRoutePaths } from ".
 import AuthRoute from "./auth.route";
 import ProtectedRoute from "./Protected.route";
 import NotFound from "@/page/errors/NotFound";
+import AppLayout from "@/layout/app.layout";
 
 function AppRoutes() {
   return (
@@ -25,7 +26,7 @@ function AppRoutes() {
         </Route>
 
         <Route path="/" element={<ProtectedRoute />}>
-          <Route element={<BaseLayout />}>
+          <Route element={<AppLayout />}>
             {protectedRoutePaths.map((route) => (
               <Route key={route.path} path={route.path} element={route.element} />
             ))}
