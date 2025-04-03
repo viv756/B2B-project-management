@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import Logo from "@/components/logo";
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
@@ -15,8 +15,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { loginMutationFn } from "@/lib/api";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl");
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginMutationFn,
+  });
+
   const formSchema = z.object({
     email: z.string().trim().email("Invalid email address").min(1, {
       message: "Workspace name is required",
@@ -33,6 +45,29 @@ const SignIn = () => {
       password: "",
     },
   });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isPending) return;
+
+    mutate(values, {
+      onSuccess: (data) => {
+        const user = data.user;
+        console.log(user);
+        const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
+        navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
+      },
+      onError: (error) => {
+        toast.error("Error", {
+          description: error.message,
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+      },
+    });
+  };
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -48,7 +83,7 @@ const SignIn = () => {
             </CardHeader>
             <CardContent>
               <Form {...form}>
-                <form action="">
+                <form onSubmit={form.handleSubmit(onSubmit)}>
                   <div className="grid gap-6">
                     <div className="flex flex-col gap-4">
                       <GoogleOauthButton label="Login" />
@@ -104,11 +139,8 @@ const SignIn = () => {
                           )}
                         />
                       </div>
-                      <Button
-                        // disabled={isPending}
-                        type="submit"
-                        className="w-full">
-                        {/* {isPending && <Loader className="animate-spin" />} */}
+                      <Button disabled={isPending} type="submit" className="w-full">
+                        {isPending && <Loader className="animate-spin" />}
                         Login
                       </Button>
                     </div>
