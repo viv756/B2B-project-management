@@ -97,6 +97,20 @@ export type ProjectType = {
   updatedAt: string;
 };
 
+export type CreateProjectPayloadType = {
+  workspaceId: string;
+  data: {
+    emoji: string;
+    name: string;
+    description: string;
+  };
+};
+
+export type ProjectResponseType = {
+  message: "Project created successfully";
+  project: ProjectType;
+};
+
 export type PaginationType = {
   totalCount: number;
   pageSize: number;
