@@ -16,37 +16,7 @@ import Logo from "../logo";
 import useWorkspaceId from "@/hooks/api/use-workspace-is";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@/context/auth.provider";
-
 import WorkspaceSwitcher from "./workspaceSwitcher";
-
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
 
 export function AppSidebar() {
   const { isLoading, user } = useAuthContext();
@@ -67,14 +37,11 @@ export function AppSidebar() {
           )}
         </div>
       </SidebarHeader>
-
       <SidebarContent className=" !mt-0 dark:bg-background">
-      <SidebarGroup className="!py-0">
+        <SidebarGroup className="!py-0">
           <SidebarGroupContent>
-
-            < WorkspaceSwitcher/>
+            <WorkspaceSwitcher />
           </SidebarGroupContent>
-          
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>

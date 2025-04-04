@@ -25,6 +25,15 @@ export type UserType = {
   };
 };
 
+// Workspace Type
+export type WorkspaceType = {
+  _id: string;
+  name: string;
+  description?: string;
+  owner: string;
+  inviteCode: string;
+};
+
 export type registerType = {
   name: string;
   email: string;
@@ -34,4 +43,9 @@ export type registerType = {
 export type CurrentUserResponseType = {
   message: string;
   user: UserType;
+};
+
+export type AllWorkspaceResponseType = {
+  message: string;
+  workspaces: WorkspaceType[];
 };

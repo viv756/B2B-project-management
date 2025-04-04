@@ -10,7 +10,9 @@ const AppLayout = () => {
         <AppSidebar />
         <SidebarInset className="overflow-x-hidden">
           <SidebarTrigger />
-          <Outlet />
+          <div className="w-full">
+            <Outlet />
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </AuthProvider>
