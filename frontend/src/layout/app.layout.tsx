@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/asidebar/appsidebar";
-import CreateWorkspaceDialog from "@/components/create-workspace-dialog";
+import CreateWorkspaceDialog from "@/components/workspace/create-workspace-dialog";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import CreateProjectDialog from "@/components/workspace/project/create-project-dialog";
 import { AuthProvider } from "@/context/auth.provider";
