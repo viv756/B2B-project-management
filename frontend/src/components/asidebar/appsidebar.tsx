@@ -9,7 +9,6 @@ import {
 import Logo from "../logo";
 import useWorkspaceId from "@/hooks/use-workspace-is";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "@/context/auth.provider";
 import WorkspaceSwitcher from "./workspaceSwitcher";
 import { Separator } from "../ui/separator";
 import { NavMain } from "./nav-main";
@@ -39,6 +38,7 @@ export function AppSidebar() {
             <WorkspaceSwitcher />
             <Separator />
             <NavMain />
+            <Separator />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
