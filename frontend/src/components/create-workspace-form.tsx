@@ -13,8 +13,20 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createWorkspaceMutationFn } from "@/lib/api";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
 
 const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: createWorkspaceMutationFn,
+  });
+
   const formSchema = z.object({
     name: z.string().trim().min(1, {
       message: "Workspace name is required",
@@ -29,6 +41,30 @@ const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
       description: "",
     },
   });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isPending) return;
+    mutate(values, {
+      onSuccess: (data) => {
+        queryClient.resetQueries({
+          queryKey: ["userWorkspaces"],
+        });
+
+        const workspace = data.workspace;
+        onClose();
+        navigate(`/workspace/${workspace._id}`);
+      },
+      onError: (error) => {
+        toast.error("Error", {
+          description: error.message,
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+      },
+    });
+  };
 
   return (
     <main className="w-full flex flex-row min-h-[590px] h-auto max-w-full">
@@ -45,7 +81,7 @@ const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
           </p>
         </div>
         <Form {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-4">
               <FormField
                 control={form.control}
@@ -90,12 +126,21 @@ const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
               />
             </div>
 
-            <Button className="w-full h-[40px] text-white font-semibold" type="submit">
+            <Button
+              disabled={isPending}
+              className="w-full h-[40px] text-white font-semibold"
+              type="submit">
+              {isPending && <Loader className="animate-spin" />}
               Create Workspace
             </Button>
           </form>
         </Form>
       </div>
+      <div
+        className="relative flex-1 shrink-0 hidden bg-muted md:block
+      bg-[url('/images/workspace.jpg')] bg-cover bg-center h-full
+      "
+      />
     </main>
   );
 };

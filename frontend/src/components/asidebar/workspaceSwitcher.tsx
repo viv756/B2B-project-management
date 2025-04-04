@@ -39,7 +39,7 @@ export default function WorkspaceSwitcher() {
   const workspaceId = useWorkspaceId();
 
   const { data, isPending } = useQuery({
-    queryKey: ["useWorkspace"],
+    queryKey: ["userWorkspaces"],
     queryFn: getAllWorkspacesUserIsMemberQueryFn,
     staleTime: 1,
     refetchOnMount: true,
@@ -68,7 +68,9 @@ export default function WorkspaceSwitcher() {
     <>
       <SidebarGroupLabel className="w-full justify-between pr-0">
         <span>Workspaces</span>
-        <button className="flex size-5 items-center justify-center rounded-full border">
+        <button
+          onClick={onOpen}
+          className="flex size-5 items-center justify-center rounded-full border">
           <Plus className="size-3.5" />
         </button>
       </SidebarGroupLabel>

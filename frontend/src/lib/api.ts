@@ -1,11 +1,19 @@
 import {
   AllWorkspaceResponseType,
+  CreateWorkspaceResponseType,
+  CreateWorkspaceType,
   CurrentUserResponseType,
   LoginResponseType,
   loginType,
   registerType,
 } from "@/types/api.types";
 import API from "./axios.client";
+
+// ************** USER AUTH *****************
+export const getCurrentUserQueryFn = async (): Promise<CurrentUserResponseType> => {
+  const response = await API.get(`/user/current`);
+  return response.data;
+};
 
 export const loginMutationFn = async (data: loginType): Promise<LoginResponseType> => {
   const response = await API.post("/auth/login", data);
@@ -15,12 +23,15 @@ export const loginMutationFn = async (data: loginType): Promise<LoginResponseTyp
 export const registerMutationFn = async (data: registerType) =>
   await API.post("/auth/register", data);
 
-export const getCurrentUserQueryFn = async (): Promise<CurrentUserResponseType> => {
-  const response = await API.get(`/user/current`);
+// ******************* WORKSPACE *******************
+export const getAllWorkspacesUserIsMemberQueryFn = async (): Promise<AllWorkspaceResponseType> => {
+  const response = await API.get(`/workspace/all`);
   return response.data;
 };
 
-export const getAllWorkspacesUserIsMemberQueryFn = async (): Promise<AllWorkspaceResponseType> => {
-  const response = await API.get(`/workspace/all`);
+export const createWorkspaceMutationFn = async (
+  data: CreateWorkspaceType
+): Promise<CreateWorkspaceResponseType> => {
+  const response = await API.post(`/workspace/create/new`, data);
   return response.data;
 };

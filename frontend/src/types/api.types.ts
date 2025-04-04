@@ -49,3 +49,13 @@ export type AllWorkspaceResponseType = {
   message: string;
   workspaces: WorkspaceType[];
 };
+
+export type CreateWorkspaceType = {
+  name: string;
+  description: string;
+};
+
+export type CreateWorkspaceResponseType = {
+  message: string;
+  workspace: WorkspaceType;
+};
