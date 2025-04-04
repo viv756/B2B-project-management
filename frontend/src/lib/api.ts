@@ -1,10 +1,13 @@
 import {
+  AllProjectPayloadType,
+  AllProjectResponseType,
   AllWorkspaceResponseType,
   CreateWorkspaceResponseType,
   CreateWorkspaceType,
   CurrentUserResponseType,
   LoginResponseType,
   loginType,
+  ProjectByIdPayloadType,
   registerType,
   WorkspaceByIdResponseType,
 } from "@/types/api.types";
@@ -41,5 +44,28 @@ export const getWorkspaceByIdQueryFn = async (
   workspaceId: string
 ): Promise<WorkspaceByIdResponseType> => {
   const response = await API.get(`/workspace/${workspaceId}`);
+  return response.data;
+};
+
+export const deleteProjectMutationFn = async ({
+  workspaceId,
+  projectId,
+}: ProjectByIdPayloadType): Promise<{
+  message: string;
+}> => {
+  const response = await API.delete(
+    `/project/${projectId}/workspace/${workspaceId}/delete`
+  );
+  return response.data;
+};
+
+export const getProjectsInWorkspaceQueryFn = async ({
+  workspaceId,
+  pageSize = 10,
+  pageNumber = 1,
+}: AllProjectPayloadType): Promise<AllProjectResponseType> => {
+  const response = await API.get(
+    `/project/workspace/${workspaceId}/all?pageSize=${pageSize}&pageNumber=${pageNumber}`
+  );
   return response.data;
 };

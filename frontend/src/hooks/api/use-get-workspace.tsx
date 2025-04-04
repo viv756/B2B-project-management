@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "@tanstack/react-query";
 import { getWorkspaceByIdQueryFn } from "@/lib/api";
 import { CustomError } from "@/types/custom-error.type";

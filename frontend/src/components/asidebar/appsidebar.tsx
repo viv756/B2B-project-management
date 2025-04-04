@@ -12,9 +12,9 @@ import { Link } from "react-router-dom";
 import WorkspaceSwitcher from "./workspaceSwitcher";
 import { Separator } from "../ui/separator";
 import { NavMain } from "./nav-main";
+import NavProjects from "./nav-projects";
 
 export function AppSidebar() {
-  // const { isLoading, user } = useAuthContext();
   const workspaceId = useWorkspaceId();
   const { open } = useSidebar();
 
@@ -39,6 +39,7 @@ export function AppSidebar() {
             <Separator />
             <NavMain />
             <Separator />
+            <NavProjects/>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
