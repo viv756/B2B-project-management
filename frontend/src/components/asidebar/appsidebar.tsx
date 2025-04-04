@@ -7,7 +7,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "../logo";
-import useWorkspaceId from "@/hooks/api/use-workspace-is";
+import useWorkspaceId from "@/hooks/use-workspace-is";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@/context/auth.provider";
 import WorkspaceSwitcher from "./workspaceSwitcher";

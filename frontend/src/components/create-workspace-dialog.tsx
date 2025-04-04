@@ -4,7 +4,7 @@ import useCreateWorkspaceDialog from "@/hooks/use-create-workspace-dialogue";
 
 const CreateWorkspaceDialog = () => {
   const { open, onClose } = useCreateWorkspaceDialog();
-  console.log("Dialog open state:", open); // Debugging
+  
   return (
     <Dialog modal={true} open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-5xl !p-0 overflow-hidden border-0">
