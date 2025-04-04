@@ -25,6 +25,12 @@ export type UserType = {
   };
 };
 
+export type registerType = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type CurrentUserResponseType = {
   message: string;
   user: UserType;

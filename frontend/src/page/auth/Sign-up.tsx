@@ -11,12 +11,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { registerMutationFn } from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: registerMutationFn,
+  });
+
   const formSchema = z.object({
     name: z.string().trim().min(1, {
       message: "Name is required",
@@ -38,6 +47,25 @@ const SignUp = () => {
     },
   });
 
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isPending) return;
+    mutate(values, {
+      onSuccess: () => {
+        navigate("/");
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error(`${error.message}`, {
+          description: Date.now(),
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+      },
+    });
+  };
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -54,7 +82,7 @@ const SignUp = () => {
 
             <CardContent>
               <Form {...form}>
-                <form action="">
+                <form onSubmit={form.handleSubmit(onSubmit)}>
                   <div className="grid gap-6">
                     <div className="flex flex-col gap-4">
                       <GoogleOauthButton label="Signup" />
