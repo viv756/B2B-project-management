@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -6,10 +6,18 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+  useSidebar,
+} from "@/components/ui/sidebar";
+import Logo from "../logo";
+import useWorkspaceId from "@/hooks/api/use-workspace-is";
+import { Link } from "react-router-dom";
+import { useAuthContext } from "@/context/auth.provider";
+
+import WorkspaceSwitcher from "./workspaceSwitcher";
 
 // Menu items.
 const items = [
@@ -38,30 +46,37 @@ const items = [
     url: "#",
     icon: Settings,
   },
-]
+];
 
 export function AppSidebar() {
+  const { isLoading, user } = useAuthContext();
+  const workspaceId = useWorkspaceId();
+  const { open } = useSidebar();
+
   return (
-    <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="!py-0 dark:bg-background">
+        <div className="flex h-[50px] items-center justify-start w-full px-1">
+          <Logo url={`/workspace/${workspaceId}`} />
+          {open && (
+            <Link
+              to={`/workspace/${workspaceId}`}
+              className="hidden md:flex ml-2 items-center gap-2 self-center font-medium">
+              Team Sync.
+            </Link>
+          )}
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className=" !mt-0 dark:bg-background">
+      <SidebarGroup className="!py-0">
           <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+
+            < WorkspaceSwitcher/>
           </SidebarGroupContent>
+          
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
