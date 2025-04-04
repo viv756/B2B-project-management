@@ -1,4 +1,4 @@
-import useAuth from "@/hooks/use-auth";
+import useAuth from "@/hooks/api/use-auth";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { isAuthRoute } from "./common/routePaths";
 import { DashboardSkeleton } from "@/components/skelton-loader/dashboard-skelton";

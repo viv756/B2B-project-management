@@ -1,4 +1,4 @@
-import useAuth from "@/hooks/use-auth";
+import useAuth from "@/hooks/api/use-auth";
 import { UserType } from "@/types/api.types";
 import { createContext, useContext } from "react";
 
