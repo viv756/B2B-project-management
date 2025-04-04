@@ -1,3 +1,5 @@
+import { PermissionType } from "@/constant";
+
 export type loginType = { email: string; password: string };
 export type LoginResponseType = {
   message: string;
@@ -38,6 +40,26 @@ export type registerType = {
   name: string;
   email: string;
   password: string;
+};
+
+export type WorkspaceWithMembersType = WorkspaceType & {
+  members: {
+    _id: string;
+    userId: string;
+    workspaceId: string;
+    role: {
+      _id: string;
+      name: string;
+      permissions: PermissionType[];
+    };
+    joinedAt: string;
+    createdAt: string;
+  }[];
+};
+
+export type WorkspaceByIdResponseType = {
+  message: string;
+  workspace: WorkspaceWithMembersType;
 };
 
 export type CurrentUserResponseType = {

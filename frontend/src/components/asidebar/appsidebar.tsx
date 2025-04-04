@@ -11,9 +11,11 @@ import useWorkspaceId from "@/hooks/use-workspace-is";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@/context/auth.provider";
 import WorkspaceSwitcher from "./workspaceSwitcher";
+import { Separator } from "../ui/separator";
+import { NavMain } from "./nav-main";
 
 export function AppSidebar() {
-  const { isLoading, user } = useAuthContext();
+  // const { isLoading, user } = useAuthContext();
   const workspaceId = useWorkspaceId();
   const { open } = useSidebar();
 
@@ -35,6 +37,8 @@ export function AppSidebar() {
         <SidebarGroup className="!py-0">
           <SidebarGroupContent>
             <WorkspaceSwitcher />
+            <Separator />
+            <NavMain />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

@@ -6,6 +6,7 @@ import {
   LoginResponseType,
   loginType,
   registerType,
+  WorkspaceByIdResponseType,
 } from "@/types/api.types";
 import API from "./axios.client";
 
@@ -33,5 +34,12 @@ export const createWorkspaceMutationFn = async (
   data: CreateWorkspaceType
 ): Promise<CreateWorkspaceResponseType> => {
   const response = await API.post(`/workspace/create/new`, data);
+  return response.data;
+};
+
+export const getWorkspaceByIdQueryFn = async (
+  workspaceId: string
+): Promise<WorkspaceByIdResponseType> => {
+  const response = await API.get(`/workspace/${workspaceId}`);
   return response.data;
 };
