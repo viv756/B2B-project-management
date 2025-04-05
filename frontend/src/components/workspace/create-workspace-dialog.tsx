@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from "../ui/dialog";
-import CreateWorkspaceForm from "../create-workspace-form";
+import CreateWorkspaceForm from "./create-workspace-form";
 import useCreateWorkspaceDialog from "@/hooks/use-create-workspace-dialogue";
 
 const CreateWorkspaceDialog = () => {
