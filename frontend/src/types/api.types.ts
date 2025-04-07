@@ -1,6 +1,13 @@
 import { PermissionType } from "@/constant";
 
+export type registerType = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type loginType = { email: string; password: string };
+
 export type LoginResponseType = {
   message: string;
   user: {
@@ -8,6 +15,7 @@ export type LoginResponseType = {
     currentWorkspace: string;
   };
 };
+
 
 // USER TYPE
 export type UserType = {
@@ -27,6 +35,11 @@ export type UserType = {
   };
 };
 
+export type CurrentUserResponseType = {
+  message: string;
+  user: UserType;
+};
+
 // Workspace Type
 export type WorkspaceType = {
   _id: string;
@@ -36,11 +49,6 @@ export type WorkspaceType = {
   inviteCode: string;
 };
 
-export type registerType = {
-  name: string;
-  email: string;
-  password: string;
-};
 
 export type WorkspaceWithMembersType = WorkspaceType & {
   members: {
@@ -62,10 +70,6 @@ export type WorkspaceByIdResponseType = {
   workspace: WorkspaceWithMembersType;
 };
 
-export type CurrentUserResponseType = {
-  message: string;
-  user: UserType;
-};
 
 export type AllWorkspaceResponseType = {
   message: string;

@@ -8,7 +8,7 @@ const useGetWorkspaceQuery = (workspaceId: string) => {
     queryFn: () => getWorkspaceByIdQueryFn(workspaceId),
     staleTime: 0,
     retry: 2,
-    enabled: !!workspaceId,
+    enabled: !!workspaceId, // wait until workspaceId is available
   });
 
   return query;

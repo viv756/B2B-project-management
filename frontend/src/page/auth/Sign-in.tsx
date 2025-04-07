@@ -22,8 +22,8 @@ import { Loader } from "lucide-react";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const returnUrl = searchParams.get("returnUrl");
+  // const [searchParams] = useSearchParams();
+  // const returnUrl = searchParams.get("returnUrl");
 
   const { mutate, isPending } = useMutation({
     mutationFn: loginMutationFn,
@@ -52,13 +52,12 @@ const SignIn = () => {
     mutate(values, {
       onSuccess: (data) => {
         const user = data.user;
-        console.log(user);
-        const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
-        navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
+        // const decodedUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
+        navigate(`/workspace/${user.currentWorkspace}`);
       },
       onError: (error) => {
-        toast.error("Error", {
-          description: error.message,
+        toast.error(`${error.message}`, {
+          description: Date.now(),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

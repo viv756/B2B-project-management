@@ -76,8 +76,8 @@ const NavProjects = () => {
           queryClient.invalidateQueries({
             queryKey: ["allprojects", workspaceId],
           });
-          toast.success("Error", {
-            description: data.message,
+          toast.success(`${data.message}`, {
+            description: Date.now(),
             action: {
               label: "Undo",
               onClick: () => console.log("Undo"),
@@ -88,8 +88,8 @@ const NavProjects = () => {
           setTimeout(() => onCloseDialog(), 100);
         },
         onError: (error) => {
-          toast.error("Error", {
-            description: error.message,
+          toast.error(`${error.message}`, {
+            description: Date.now(),
             action: {
               label: "Undo",
               onClick: () => console.log("Undo"),
