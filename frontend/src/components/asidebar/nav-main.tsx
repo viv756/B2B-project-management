@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "@/context/auth.provider";
-import useWorkspaceId from "@/hooks/use-workspace-is";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 import { Permissions } from "@/constant";
 
 

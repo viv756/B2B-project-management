@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import useWorkspaceId from "@/hooks/use-workspace-is";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 import { createProjectMutationFn } from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

@@ -7,7 +7,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "../logo";
-import useWorkspaceId from "@/hooks/use-workspace-is";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 import { Link } from "react-router-dom";
 import WorkspaceSwitcher from "./workspaceSwitcher";
 import { Separator } from "../ui/separator";

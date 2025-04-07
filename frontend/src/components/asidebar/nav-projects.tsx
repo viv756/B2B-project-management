@@ -21,7 +21,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useWorkspaceId from "@/hooks/use-workspace-is";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 import useConfirmDialog from "@/hooks/use-confirm-dialog";
 import useCreateProjectDialog from "@/hooks/use-create-projects";
 import { deleteProjectMutationFn } from "@/lib/api";

@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllWorkspacesUserIsMemberQueryFn } from "@/lib/api";
-import useWorkspaceId from "@/hooks/use-workspace-is";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 import {
   DropdownMenuContent,
   DropdownMenuItem,
