@@ -29,6 +29,8 @@ export const loginMutationFn = async (data: loginType): Promise<LoginResponseTyp
 export const registerMutationFn = async (data: registerType) =>
   await API.post("/auth/register", data);
 
+export const logoutMutationFn = async () => await API.post("/auth/logout");
+
 // ************************************* WORKSPACE ************************************** //
 
 export const getAllWorkspacesUserIsMemberQueryFn = async (): Promise<AllWorkspaceResponseType> => {
@@ -61,17 +63,13 @@ export const getProjectsInWorkspaceQueryFn = async ({
   return response.data;
 };
 
-
 // ************************************ PROJECT ******************************************* //
 
 export const createProjectMutationFn = async ({
   workspaceId,
   data,
 }: CreateProjectPayloadType): Promise<ProjectResponseType> => {
-  const response = await API.post(
-    `/project/workspace/${workspaceId}/create`,
-    data
-  );
+  const response = await API.post(`/project/workspace/${workspaceId}/create`, data);
   return response.data;
 };
 
@@ -81,9 +79,6 @@ export const deleteProjectMutationFn = async ({
 }: ProjectByIdPayloadType): Promise<{
   message: string;
 }> => {
-  const response = await API.delete(
-    `/project/${projectId}/workspace/${workspaceId}/delete`
-  );
+  const response = await API.delete(`/project/${projectId}/workspace/${workspaceId}/delete`);
   return response.data;
 };
-
