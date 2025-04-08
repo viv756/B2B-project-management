@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -7,7 +8,16 @@
 html,
 body {
   height: 100%;
-  font-family: "DM Sans", serif !important;
+}
+
+@theme {
+  --font-sans: "DM Sans", sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
 }
 
 :root {
