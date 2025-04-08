@@ -144,3 +144,13 @@ export type ProjectByIdPayloadType = {
   workspaceId: string;
   projectId: string;
 };
+
+// WORKSPACE ANALYTICS TYPE
+export type AnalyticsResponseType = {
+  message: string;
+  analytics: {
+    totalTasks: number;
+    overdueTasks: number;
+    completedTasks: number;
+  };
+};

@@ -2,6 +2,7 @@ import {
   AllProjectPayloadType,
   AllProjectResponseType,
   AllWorkspaceResponseType,
+  AnalyticsResponseType,
   CreateProjectPayloadType,
   CreateWorkspaceResponseType,
   CreateWorkspaceType,
@@ -60,6 +61,13 @@ export const getProjectsInWorkspaceQueryFn = async ({
   const response = await API.get(
     `/project/workspace/${workspaceId}/all?pageSize=${pageSize}&pageNumber=${pageNumber}`
   );
+  return response.data;
+};
+
+export const getWorkspaceAnalyticsQueryFn = async (
+  workspaceId: string
+): Promise<AnalyticsResponseType> => {
+  const response = await API.get(`/workspace/analytics/${workspaceId}`);
   return response.data;
 };
 
