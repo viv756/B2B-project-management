@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logoutMutationFn } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 const LogoutDialog = (props: {
   isOpen: boolean;
@@ -51,7 +52,8 @@ const LogoutDialog = (props: {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button type="button" onClick={handleLogout}>
+          <Button disabled={isPending} type="button" onClick={handleLogout}>
+            {isPending && <Loader className="animate-spin"/>}
             Sign out
           </Button>
           <Button type="button" onClick={() => setIsOpen(false)}>
