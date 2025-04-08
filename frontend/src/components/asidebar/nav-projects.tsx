@@ -169,6 +169,7 @@ const NavProjects = () => {
                         <span>View Project</span>
                       </DropdownMenuItem>
 
+                      {/* CHECK THE USER HAS PERMISSION TO DELETE THE PROJECT */}
                       <PermissionsGuard requiredPermission={Permissions.DELETE_PROJECT}>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem disabled={isLoading} onClick={() => onOpenDialog(item)}>
@@ -176,6 +177,7 @@ const NavProjects = () => {
                           <span>Delete Project</span>
                         </DropdownMenuItem>
                       </PermissionsGuard>
+
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </SidebarMenuItem>

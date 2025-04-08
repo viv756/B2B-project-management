@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  LucideIcon,
-  Settings,
-  Users,
-  CheckCircle,
-  LayoutDashboard,
-} from "lucide-react";
+import { LucideIcon, Settings, Users, CheckCircle, LayoutDashboard } from "lucide-react";
 import {
   SidebarGroup,
   SidebarMenu,
@@ -18,7 +12,6 @@ import { useAuthContext } from "@/context/auth.provider";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { Permissions } from "@/constant";
 
-
 type ItemType = {
   title: string;
   url: string;
@@ -28,9 +21,7 @@ type ItemType = {
 export function NavMain() {
   const { hasPermission } = useAuthContext();
 
-  const canManageSettings = hasPermission(
-    Permissions.MANAGE_WORKSPACE_SETTINGS
-  );
+  const canManageSettings = hasPermission(Permissions.MANAGE_WORKSPACE_SETTINGS);
 
   const workspaceId = useWorkspaceId();
   const location = useLocation();
