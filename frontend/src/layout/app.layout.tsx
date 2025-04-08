@@ -1,9 +1,10 @@
 import { AppSidebar } from "@/components/asidebar/appsidebar";
 import CreateWorkspaceDialog from "@/components/workspace/create-workspace-dialog";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import CreateProjectDialog from "@/components/workspace/project/create-project-dialog";
 import { AuthProvider } from "@/context/auth.provider";
 import { Outlet } from "react-router-dom";
+import Header from "@/components/header";
 
 const AppLayout = () => {
   return (
@@ -11,11 +12,15 @@ const AppLayout = () => {
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset className="overflow-x-hidden">
-          <SidebarTrigger />
           <div className="w-full">
-            <Outlet />
+            <>
+              <Header />
+              <div className="px-3 lg:px-20 py-3">
+                <Outlet />
+              </div>
+            </>
             <CreateWorkspaceDialog />
-            <CreateProjectDialog/>
+            <CreateProjectDialog />
           </div>
         </SidebarInset>
       </SidebarProvider>
