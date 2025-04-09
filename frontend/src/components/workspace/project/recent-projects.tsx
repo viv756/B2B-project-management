@@ -34,7 +34,7 @@ const RecentProjects = () => {
           No Project created yet
         </div>
       )}
-      <ul>
+       <ul role="list" className="space-y-2">
         {projects?.map((project) => {
           const name = project.createdBy.name;
           const initials = getAvatarFallbackText(name);
