@@ -27,3 +27,7 @@ export const getAvatarColor = (initials: string): string => {
 
   return colors[hash % colors.length];
 };
+
+export const transformStatusEnum = (status: string): string => {
+  return status.replace(/_/g, " ");
+};

@@ -1,4 +1,4 @@
-import { PermissionType } from "@/constant";
+import { PermissionType, TaskPriorityEnumType, TaskStatusEnumType } from "@/constant";
 
 export type registerType = {
   name: string;
@@ -15,7 +15,6 @@ export type LoginResponseType = {
     currentWorkspace: string;
   };
 };
-
 
 // USER TYPE
 export type UserType = {
@@ -49,7 +48,6 @@ export type WorkspaceType = {
   inviteCode: string;
 };
 
-
 export type WorkspaceWithMembersType = WorkspaceType & {
   members: {
     _id: string;
@@ -69,7 +67,6 @@ export type WorkspaceByIdResponseType = {
   message: string;
   workspace: WorkspaceWithMembersType;
 };
-
 
 export type AllWorkspaceResponseType = {
   message: string;
@@ -153,4 +150,45 @@ export type AnalyticsResponseType = {
     overdueTasks: number;
     completedTasks: number;
   };
+};
+
+export type TaskType = {
+  _id: string;
+  title: string;
+  description?: string;
+  project?: {
+    _id: string;
+    emoji: string;
+    name: string;
+  };
+  priority: TaskPriorityEnumType;
+  status: TaskStatusEnumType;
+  assignedTo: {
+    _id: string;
+    name: string;
+    profilePicture: string | null;
+  } | null;
+  createdBy?: string;
+  dueDate: string;
+  taskCode: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type AllTaskPayloadType = {
+  workspaceId: string;
+  projectId?: string | null;
+  keyword?: string | null;
+  priority?: TaskPriorityEnumType | null;
+  status?: TaskStatusEnumType | null;
+  assignedTo?: string | null;
+  dueDate?: string | null;
+  pageNumber?: number | null;
+  pageSize?: number | null;
+};
+
+export type AllTaskResponseType = {
+  message: string;
+  tasks: TaskType[];
+  pagination: PaginationType;
 };
