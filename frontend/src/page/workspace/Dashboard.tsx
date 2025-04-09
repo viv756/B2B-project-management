@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import RecentProjects from "@/components/workspace/project/recent-projects";
 import WorkspaceAnalytics from "@/components/workspace/workspace-analytics";
 import { Plus } from "lucide-react";
 
@@ -16,6 +18,22 @@ const WorkspaceDashboard = () => {
         </Button>
       </div>
       <WorkspaceAnalytics />
+      <Tabs defaultValue="projects" className="w-full border rounded-lg p-2">
+        <TabsList className="w-full justify-start border-0 bg-gray-50 px-1 h-12">
+          <TabsTrigger className="py-2" value="projects">
+            Recent Projects
+          </TabsTrigger>
+          <TabsTrigger className="py-2" value="tasks">
+            Recent Tasks
+          </TabsTrigger>
+          <TabsTrigger className="py-2" value="members">
+            Recent Members
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="projects">
+          <RecentProjects />
+        </TabsContent>
+      </Tabs>
     </main>
   );
 };
