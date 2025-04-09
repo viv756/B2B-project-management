@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { Loader } from "lucide-react";
 
 const RecentProjects = () => {
   const workspaceId = useWorkspaceId();
@@ -16,7 +17,23 @@ const RecentProjects = () => {
 
   const projects = data?.projects;
   return (
-    <div>
+    <div className="flex flex-col pt-2">
+      {isPending ? (
+        <Loader
+          className="w-8 h-8
+         animate-spin
+         place-self-center
+         flex"
+        />
+      ) : null}
+      {projects?.length === 0 && (
+        <div
+          className="font-semibold
+         text-sm text-muted-foreground
+          text-center py-5">
+          No Project created yet
+        </div>
+      )}
       <ul>
         {projects?.map((project) => {
           const name = project.createdBy.name;
