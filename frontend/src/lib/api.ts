@@ -1,4 +1,5 @@
 import {
+  AllMembersInWorkspaceResponseType,
   AllProjectPayloadType,
   AllProjectResponseType,
   AllTaskPayloadType,
@@ -120,5 +121,13 @@ export const getAllTasksQueryFn = async ({
 
   const url = queryParams.toString() ? `${baseUrl}?${queryParams}` : baseUrl;
   const response = await API.get(url);
+  return response.data;
+};
+
+// ************************************ MEMBERS ********************************************** //
+export const getMembersInWorkspaceQueryFn = async (
+  workspaceId: string
+): Promise<AllMembersInWorkspaceResponseType> => {
+  const response = await API.get(`/workspace/members/${workspaceId}`);
   return response.data;
 };

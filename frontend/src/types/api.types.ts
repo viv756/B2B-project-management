@@ -121,6 +121,12 @@ export type PaginationType = {
   limit: number;
 };
 
+// ROLE TYPE
+export type RoleType = {
+  _id: string;
+  name: string;
+};
+
 //ALL PROJECTS IN WORKSPACE TYPE
 export type AllProjectPayloadType = {
   workspaceId: string;
@@ -191,4 +197,25 @@ export type AllTaskResponseType = {
   message: string;
   tasks: TaskType[];
   pagination: PaginationType;
+};
+
+export type AllMembersInWorkspaceResponseType = {
+  message: string;
+  members: {
+    _id: string;
+    userId: {
+      _id: string;
+      name: string;
+      email: string;
+      profilePicture: string | null;
+    };
+    workspaceId: string;
+    role: {
+      _id: string;
+      name: string;
+    };
+    joinedAt: string;
+    createdAt: string;
+  }[];
+  roles: RoleType[];
 };

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import RecentMembers from "@/components/workspace/member/recent-members";
 import RecentProjects from "@/components/workspace/project/recent-projects";
 import RecentTasks from "@/components/workspace/task/recent-tasks";
 import WorkspaceAnalytics from "@/components/workspace/workspace-analytics";
@@ -36,6 +37,9 @@ const WorkspaceDashboard = () => {
         </TabsContent>
         <TabsContent value="tasks">
           <RecentTasks />
+        </TabsContent>
+        <TabsContent value="members">
+          <RecentMembers />
         </TabsContent>
       </Tabs>
     </main>
