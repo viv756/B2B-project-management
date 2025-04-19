@@ -1,4 +1,5 @@
 import CreateTaskDialog from "@/components/workspace/task/create-task-dialog";
+import TaskTable from "@/components/workspace/task/task-table";
 
 const Tasks = () => {
   return (
@@ -9,6 +10,9 @@ const Tasks = () => {
           <p className="text-muted-foreground">Here&apos;s the list of tasks for this workspace!</p>
         </div>
         <CreateTaskDialog/>
+      </div>
+      <div>
+        <TaskTable />
       </div>
     </div>
   );
