@@ -17,20 +17,28 @@ import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
 import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
 import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
 import useWorkspaceId from "@/hooks/use-workspace-id";
+import { createTaskMutationFn } from "@/lib/api";
 import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/helper";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PopoverTrigger } from "@radix-ui/react-popover";
-import { SelectContent, SelectGroup } from "@radix-ui/react-select";
+import { SelectContent } from "@radix-ui/react-select";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { CalendarIcon, Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
   const { projectId, onClose } = props;
 
+  const queryClient = useQueryClient();
   const workspaceId = useWorkspaceId();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: createTaskMutationFn,
+  });
 
   const { data, isLoading } = useGetProjectsInWorkspaceQuery({
     workspaceId,
@@ -111,6 +119,48 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
     },
   });
 
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (isPending) return;
+    const payload = {
+      workspaceId,
+      projectId: values.projectId,
+      data: {
+        ...values,
+        dueDate: values.dueDate.toISOString(),
+      },
+    };
+
+    mutate(payload, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["project-analytics", projectId],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ["all-tasks", workspaceId],
+        });
+
+        toast("Task has been created", {
+          description: Date.now(),
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+        onClose();
+      },
+      onError: (error) => {
+        toast(error.message, {
+          description: Date.now(),
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+      },
+    });
+  };
+
   return (
     <div className="w-full h-auto max-w-full">
       <div className="h-full">
@@ -126,16 +176,14 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
         </div>
 
         <Form {...form}>
-          <form className="space-y-3">
+          <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
             <div>
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                      Task title
-                    </FormLabel>
+                    <FormLabel className="dark:text-[#f1f7feb5] text-sm">Task title</FormLabel>
                     <FormControl>
                       <Input placeholder="Website Redesign" className="!h-[48px]" {...field} />
                     </FormControl>
@@ -164,7 +212,7 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
             </div>
 
             {!projectId && (
-              <div >
+              <div>
                 <FormField
                   control={form.control}
                   name="projectId"
@@ -177,22 +225,21 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
                             <SelectValue placeholder="Select a project" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent className="mt-15 bg-background border rounded-sm">
+                        <SelectContent className="bg-background border rounded-sm">
                           {isLoading && (
                             <div className="my-2">
                               <Loader className="w-4 h-4 place-self-center flex animate-spin" />
                             </div>
                           )}
-                        
-                            {projectOptions?.map((option) => (
-                              <SelectItem
-                                key={option.value}
-                                className="!capitalize cursor-pointer "
-                                value={option.value}>
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                        
+
+                          {projectOptions?.map((option) => (
+                            <SelectItem
+                              key={option.value}
+                              className="!capitalize cursor-pointer "
+                              value={option.value}>
+                              {option.label}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -349,7 +396,9 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
 
             <Button
               className="flex place-self-end  h-[40px] text-white font-semibold"
-              type="submit">
+              type="submit"
+              disabled={isPending}>
+              {isPending && <Loader className="animate-spin" />}
               Create
             </Button>
           </form>

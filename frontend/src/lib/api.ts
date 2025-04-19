@@ -7,6 +7,7 @@ import {
   AllWorkspaceResponseType,
   AnalyticsResponseType,
   CreateProjectPayloadType,
+  CreateTaskPayloadType,
   CreateWorkspaceResponseType,
   CreateWorkspaceType,
   CurrentUserResponseType,
@@ -121,6 +122,18 @@ export const getAllTasksQueryFn = async ({
 
   const url = queryParams.toString() ? `${baseUrl}?${queryParams}` : baseUrl;
   const response = await API.get(url);
+  return response.data;
+};
+
+export const createTaskMutationFn = async ({
+  workspaceId,
+  projectId,
+  data,
+}: CreateTaskPayloadType) => {
+  const response = await API.post(
+    `/task/project/${projectId}/workspace/${workspaceId}/create`,
+    data
+  );
   return response.data;
 };
 
