@@ -1,6 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { z } from "zod";
+import { format } from "date-fns";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { CalendarIcon, Loader } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -9,28 +11,30 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent } from "@/components/ui/popover";
-import { Select, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "../../ui/textarea";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/helper";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
 import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
-import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
-import useWorkspaceId from "@/hooks/use-workspace-id";
+import useGetWorkspaceMembers from "@/hooks/api/use-get-workspace-members";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createTaskMutationFn } from "@/lib/api";
-import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/helper";
-import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PopoverTrigger } from "@radix-ui/react-popover";
-import { SelectContent } from "@radix-ui/react-select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { format } from "date-fns";
-import { CalendarIcon, Loader } from "lucide-react";
-import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 
-const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
+export default function CreateTaskForm(props: { projectId?: string; onClose: () => void }) {
   const { projectId, onClose } = props;
 
   const queryClient = useQueryClient();
@@ -45,11 +49,12 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
     skip: !!projectId,
   });
 
-  const { data: memberData } = useGetWorkspaceMemmbers(workspaceId);
+  const { data: memberData } = useGetWorkspaceMembers(workspaceId);
 
   const projects = data?.projects || [];
   const members = memberData?.members || [];
 
+  //Workspace Projects
   const projectOptions = projects?.map((project) => {
     return {
       label: (
@@ -82,12 +87,6 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
     };
   });
 
-  const taskStatusList = Object.values(TaskStatusEnum);
-  const taskPriorityList = Object.values(TaskPriorityEnum); // ["LOW", "MEDIUM", "HIGH", "URGENT"]
-
-  const statusOptions = transformOptions(taskStatusList);
-  const priorityOptions = transformOptions(taskPriorityList);
-
   const formSchema = z.object({
     title: z.string().trim().min(1, {
       message: "Title is required",
@@ -118,6 +117,12 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
       projectId: projectId ? projectId : "",
     },
   });
+
+  const taskStatusList = Object.values(TaskStatusEnum);
+  const taskPriorityList = Object.values(TaskPriorityEnum); // ["LOW", "MEDIUM", "HIGH", "URGENT"]
+
+  const statusOptions = transformOptions(taskStatusList);
+  const priorityOptions = transformOptions(taskPriorityList);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (isPending) return;
@@ -174,7 +179,6 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
             Organize and manage tasks, resources, and team collaboration
           </p>
         </div>
-
         <Form {...form}>
           <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
             <div>
@@ -187,11 +191,13 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
                     <FormControl>
                       <Input placeholder="Website Redesign" className="!h-[48px]" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
+            {/* {Description} */}
             <div>
               <FormField
                 control={form.control}
@@ -211,6 +217,8 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
               />
             </div>
 
+            {/* {ProjectId} */}
+
             {!projectId && (
               <div>
                 <FormField
@@ -225,21 +233,25 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
                             <SelectValue placeholder="Select a project" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent className="bg-background border rounded-sm">
+                        <SelectContent>
                           {isLoading && (
                             <div className="my-2">
                               <Loader className="w-4 h-4 place-self-center flex animate-spin" />
                             </div>
                           )}
-
-                          {projectOptions?.map((option) => (
-                            <SelectItem
-                              key={option.value}
-                              className="!capitalize cursor-pointer "
-                              value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
+                          <div
+                            className="w-full max-h-[200px]
+                           overflow-y-auto scrollbar
+                          ">
+                            {projectOptions?.map((option) => (
+                              <SelectItem
+                                key={option.value}
+                                className="!capitalize cursor-pointer"
+                                value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </div>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -250,6 +262,7 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
             )}
 
             {/* {Members AssigneeTo} */}
+
             <div>
               <FormField
                 control={form.control}
@@ -263,7 +276,7 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
                           <SelectValue placeholder="Select a assignee" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="mt-15 bg-background ">
+                      <SelectContent>
                         <div
                           className="w-full max-h-[200px]
                            overflow-y-auto scrollbar
@@ -330,6 +343,7 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
             </div>
 
             {/* {Status} */}
+
             <div>
               <FormField
                 control={form.control}
@@ -346,7 +360,7 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="mt-15 bg-background">
+                      <SelectContent>
                         {statusOptions?.map((status) => (
                           <SelectItem
                             className="!capitalize"
@@ -377,7 +391,7 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
                           <SelectValue placeholder="Select a priority" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="mt-15 bg-background">
+                      <SelectContent>
                         {priorityOptions?.map((priority) => (
                           <SelectItem
                             className="!capitalize"
@@ -406,6 +420,4 @@ const CreateTaskForm = (props: { projectId?: string; onClose: () => void }) => {
       </div>
     </div>
   );
-};
-
-export default CreateTaskForm;
+}
