@@ -24,7 +24,7 @@ const InviteMember = () => {
     if (inviteUrl) {
       navigator.clipboard.writeText(inviteUrl).then(() => {
         setCopied(true);
-        toast.success("Invite url copied to clipboard", {
+        toast("Invite url copied to clipboard", {
           description: Date.now(),
           action: {
             label: "Undo",
