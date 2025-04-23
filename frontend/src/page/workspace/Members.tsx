@@ -1,5 +1,6 @@
 import WorkspaceHeader from "@/components/common/workspace-header";
 import { Separator } from "@/components/ui/separator";
+import AllMember from "@/components/workspace/member/all-member";
 import InviteMember from "@/components/workspace/member/invite-member";
 
 const Members = () => {
@@ -19,6 +20,8 @@ const Members = () => {
           <Separator className="my-4" />
           {/* Invite user  */}
           <InviteMember />
+
+          <AllMember/>
         </div>
       </main>
     </div>

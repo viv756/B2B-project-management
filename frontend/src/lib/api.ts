@@ -6,6 +6,7 @@ import {
   AllTaskResponseType,
   AllWorkspaceResponseType,
   AnalyticsResponseType,
+  ChangeWorkspaceMemberRoleType,
   CreateProjectPayloadType,
   CreateTaskPayloadType,
   CreateWorkspaceResponseType,
@@ -164,5 +165,13 @@ export const invitedUserJoinWorkspaceMutationFn = async (
   workspaceId: string;
 }> => {
   const response = await API.post(`/member/workspace/${iniviteCode}/join`);
+  return response.data;
+};
+
+export const changeWorkspaceMemberRoleMutationFn = async ({
+  workspaceId,
+  data,
+}: ChangeWorkspaceMemberRoleType) => {
+  const response = await API.put(`/workspace/change/member/role/${workspaceId}`, data);
   return response.data;
 };

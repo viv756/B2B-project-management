@@ -233,3 +233,11 @@ export type AllMembersInWorkspaceResponseType = {
   }[];
   roles: RoleType[];
 };
+
+export type ChangeWorkspaceMemberRoleType = {
+  workspaceId: string;
+  data: {
+    roleId: string;
+    memberId: string;
+  };
+};
