@@ -9,7 +9,7 @@ const Tasks = () => {
           <h2 className="text-2xl font-bold tracking-tight">All Tasks</h2>
           <p className="text-muted-foreground">Here&apos;s the list of tasks for this workspace!</p>
         </div>
-        <CreateTaskDialog/>
+        <CreateTaskDialog />
       </div>
       <div>
         <TaskTable />

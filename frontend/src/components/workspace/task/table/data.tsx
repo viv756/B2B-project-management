@@ -25,12 +25,6 @@ const priorityIcons = {
   [TaskPriorityEnum.HIGH]: ArrowUp,
 };
 
-export const statuses = transformOptions(
-  Object.values(TaskStatusEnum),
-  statusIcons
-);
+export const statuses = transformOptions(Object.values(TaskStatusEnum), statusIcons);
 
-export const priorities = transformOptions(
-  Object.values(TaskPriorityEnum),
-  priorityIcons
-);
+export const priorities = transformOptions(Object.values(TaskPriorityEnum), priorityIcons);
