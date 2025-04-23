@@ -95,7 +95,6 @@ export const deleteProjectMutationFn = async ({
   return response.data;
 };
 
-
 // ************************************ TASK ********************************************** //
 export const getAllTasksQueryFn = async ({
   workspaceId,
@@ -146,9 +145,7 @@ export const deleteTaskMutationFn = async ({
 }): Promise<{
   message: string;
 }> => {
-  const response = await API.delete(
-    `task/${taskId}/workspace/${workspaceId}/delete`
-  );
+  const response = await API.delete(`task/${taskId}/workspace/${workspaceId}/delete`);
   return response.data;
 };
 
@@ -157,5 +154,15 @@ export const getMembersInWorkspaceQueryFn = async (
   workspaceId: string
 ): Promise<AllMembersInWorkspaceResponseType> => {
   const response = await API.get(`/workspace/members/${workspaceId}`);
+  return response.data;
+};
+
+export const invitedUserJoinWorkspaceMutationFn = async (
+  iniviteCode: string
+): Promise<{
+  message: string;
+  workspaceId: string;
+}> => {
+  const response = await API.post(`/member/workspace/${iniviteCode}/join`);
   return response.data;
 };
