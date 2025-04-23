@@ -1,6 +1,7 @@
 import WorkspaceHeader from "@/components/common/workspace-header";
 import { Separator } from "@/components/ui/separator";
 import EditWorkspaceForm from "@/components/workspace/edit-workspace-form";
+import DeleteWorkspaceCard from "@/components/workspace/settings/delete-workspace-card";
 
 const Settings = () => {
   return (
@@ -17,6 +18,9 @@ const Settings = () => {
           <div className="flex flex-col pt-0.5 px-0 ">
             <div className="pt-2">
               <EditWorkspaceForm />
+            </div>
+            <div className="pt-2">
+              <DeleteWorkspaceCard />
             </div>
           </div>
         </div>
