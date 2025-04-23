@@ -2,6 +2,8 @@ import WorkspaceHeader from "@/components/common/workspace-header";
 import { Separator } from "@/components/ui/separator";
 import EditWorkspaceForm from "@/components/workspace/edit-workspace-form";
 import DeleteWorkspaceCard from "@/components/workspace/settings/delete-workspace-card";
+import { Permissions } from "@/constant";
+import withPermission from "@/hoc/with-permission";
 
 const Settings = () => {
   return (
@@ -29,4 +31,6 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+const SettingsWithPermission = withPermission(Settings, Permissions.MANAGE_WORKSPACE_SETTINGS);
+
+export default SettingsWithPermission;
