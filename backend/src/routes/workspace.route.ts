@@ -13,7 +13,7 @@ import {
 const workspaceRoutes = Router();
 
 workspaceRoutes.post("/create/new", createWorkspaceController);
-workspaceRoutes.post("/update/:id", updateWorkspaceByIdController);
+workspaceRoutes.put("/update/:id", updateWorkspaceByIdController);
 workspaceRoutes.delete("/delete/:id",deleteWorkspaceController)
 
 workspaceRoutes.put("/change/member/role/:id", changeWorkspaceMemberRoleController);

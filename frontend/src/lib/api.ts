@@ -12,6 +12,7 @@ import {
   CreateWorkspaceResponseType,
   CreateWorkspaceType,
   CurrentUserResponseType,
+  EditWorkspaceType,
   LoginResponseType,
   loginType,
   ProjectByIdPayloadType,
@@ -48,6 +49,11 @@ export const createWorkspaceMutationFn = async (
   data: CreateWorkspaceType
 ): Promise<CreateWorkspaceResponseType> => {
   const response = await API.post(`/workspace/create/new`, data);
+  return response.data;
+};
+
+export const editWorkspaceMutationFn = async ({ workspaceId, data }: EditWorkspaceType) => {
+  const response = await API.put(`/workspace/update/${workspaceId}`, data);
   return response.data;
 };
 
