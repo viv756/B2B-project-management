@@ -1,7 +1,11 @@
-import React from "react";
+import WorkspaceHeader from "@/components/common/workspace-header";
 
 const Members = () => {
-  return <div>Members</div>;
+  return (
+    <div className="w-full h-auto pt-2">
+      <WorkspaceHeader />
+    </div>
+  );
 };
 
 export default Members;
