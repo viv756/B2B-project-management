@@ -25,7 +25,7 @@ const withPermission = (
 
     // Check if user has the required permission
     if (!user || !hasPermission(requiredPermission)) {
-      return
+      return null;
     }
     // If the user has permission, render the wrapped component
     return <WrappedComponent {...props} />;
