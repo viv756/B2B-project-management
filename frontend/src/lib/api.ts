@@ -102,6 +102,17 @@ export const createProjectMutationFn = async ({
   return response.data;
 };
 
+export const getProjectByIdQueryFn = async ({
+  workspaceId,
+  projectId,
+}: ProjectByIdPayloadType): Promise<ProjectResponseType> => {
+  const response = await API.get(
+    `/project/${projectId}/workspace/${workspaceId}`
+  );
+  return response.data;
+};
+
+
 export const deleteProjectMutationFn = async ({
   workspaceId,
   projectId,
