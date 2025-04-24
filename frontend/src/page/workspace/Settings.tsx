@@ -1,4 +1,4 @@
-import WorkspaceHeader from "@/components/common/workspace-header";
+import WorkspaceHeader from "@/components/workspace/common/workspace-header";
 import { Separator } from "@/components/ui/separator";
 import EditWorkspaceForm from "@/components/workspace/edit-workspace-form";
 import DeleteWorkspaceCard from "@/components/workspace/settings/delete-workspace-card";

@@ -1,4 +1,4 @@
-import WorkspaceHeader from "@/components/common/workspace-header";
+import WorkspaceHeader from "@/components/workspace/common/workspace-header";
 import { Separator } from "@/components/ui/separator";
 import AllMember from "@/components/workspace/member/all-member";
 import InviteMember from "@/components/workspace/member/invite-member";

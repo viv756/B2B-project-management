@@ -1,4 +1,4 @@
-import AnalyticsCard from "@/components/common/analytics-card";
+import AnalyticsCard from "@/components/workspace/common/analytics-card";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { getProjectAnalyticsQueryFn } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
