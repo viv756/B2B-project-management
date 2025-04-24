@@ -43,16 +43,15 @@ const Header = () => {
               ) : (
                 <BreadcrumbPage className="line-clamp-1 ">Dashboard</BreadcrumbPage>
               )}
-
-              {pageHeading && (
-                <>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem className="text-[15px]">
-                    <BreadcrumbPage className="line-clamp-1">{pageHeading}</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </>
-              )}
             </BreadcrumbItem>
+            {pageHeading && (
+              <>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem className="text-[15px]">
+                  <BreadcrumbPage className="line-clamp-1">{pageHeading}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
       </div>
