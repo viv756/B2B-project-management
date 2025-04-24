@@ -125,6 +125,16 @@ export const editProjectMutationFn = async ({
   return response.data;
 };
 
+export const getProjectAnalyticsQueryFn = async ({
+  workspaceId,
+  projectId,
+}: ProjectByIdPayloadType): Promise<AnalyticsResponseType> => {
+  const response = await API.get(
+    `/project/${projectId}/workspace/${workspaceId}/analytics`
+  );
+  return response.data;
+};
+
 export const deleteProjectMutationFn = async ({
   workspaceId,
   projectId,
