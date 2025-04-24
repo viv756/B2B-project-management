@@ -1,7 +1,11 @@
+import PermissionsGuard from "@/components/reusable/permission-guard";
+import { Permissions } from "@/constant";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { getProjectByIdQueryFn } from "@/lib/api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import EditProjectDialog from "./edit-project-dialog";
+import CreateTaskDialog from "../task/create-task-dialog";
 
 const ProjectHeader = () => {
   const param = useParams();
@@ -44,7 +48,11 @@ const ProjectHeader = () => {
         <h2 className="flex items-center gap-3 text-xl font-medium truncate tracking-tight">
           {renderContent()}
         </h2>
+        <PermissionsGuard requiredPermission={Permissions.EDIT_PROJECT}>
+          <EditProjectDialog project={project} />
+        </PermissionsGuard>
       </div>
+      <CreateTaskDialog projectId={projectId} />
     </div>
   );
 };

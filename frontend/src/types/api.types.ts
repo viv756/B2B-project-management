@@ -120,6 +120,16 @@ export type ProjectResponseType = {
   project: ProjectType;
 };
 
+export type EditProjectPayloadType = {
+  workspaceId: string;
+  projectId: string;
+  data: {
+    emoji: string;
+    name: string;
+    description: string;
+  };
+};
+
 export type PaginationType = {
   totalCount: number;
   pageSize: number;
