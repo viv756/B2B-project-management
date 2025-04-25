@@ -80,7 +80,7 @@ const AllMember = () => {
         const avatarColor = getAvatarColor(name);
 
         return (
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center justify-between space-x-4" key={member.userId._id}>
             <div className="flex items-center space-x-4">
               <Avatar className="h-8 w-8">
                 <AvatarImage src={member.userId?.profilePicture || ""} alt="Image" />
