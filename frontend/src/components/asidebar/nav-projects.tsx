@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Folder, Loader, MoreHorizontal, Plus, Trash2 } from "lucide-react";
+import { format } from "date-fns";
 
 import {
   SidebarGroup,
@@ -79,8 +80,8 @@ const NavProjects = () => {
           queryClient.invalidateQueries({
             queryKey: ["allprojects", workspaceId],
           });
-          toast.success(`${data.message}`, {
-            description: Date.now(),
+          toast(`${data.message}`, {
+            description: format(Date.now(), "yyyy-MM-dd HH:mm"),
             action: {
               label: "Undo",
               onClick: () => console.log("Undo"),
@@ -92,7 +93,7 @@ const NavProjects = () => {
         },
         onError: (error) => {
           toast.error(`${error.message}`, {
-            description: Date.now(),
+            description: format(Date.now(), "yyyy-MM-dd HH:mm"),
             action: {
               label: "Undo",
               onClick: () => console.log("Undo"),

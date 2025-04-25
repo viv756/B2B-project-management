@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, Loader } from "lucide-react";
+import { format } from "date-fns";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -53,7 +54,7 @@ const AllMember = () => {
         });
 
         toast("Member's role changed successfully", {
-          description: Date.now(),
+           description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
@@ -62,7 +63,7 @@ const AllMember = () => {
       },
       onError: (error) => {
         toast(`${error.message}`, {
-          description: Date.now(),
+           description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

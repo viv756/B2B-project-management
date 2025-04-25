@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Loader } from "lucide-react";
+import { format } from "date-fns";
 
 import EmojiPickerComponent from "@/components/emoji-picker";
 import { Button } from "@/components/ui/button";
@@ -84,7 +85,7 @@ const EditProjectForm = (props: { project?: ProjectType; onClose: () => void }) 
         });
 
         toast(data.message, {
-          description: Date.now(),
+           description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
@@ -95,7 +96,7 @@ const EditProjectForm = (props: { project?: ProjectType; onClose: () => void }) 
       },
       onError: (error) => {
         toast(`${error.message}`, {
-          description: Date.now(),
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
@@ -147,7 +148,7 @@ const EditProjectForm = (props: { project?: ProjectType; onClose: () => void }) 
                     <FormControl>
                       <Input placeholder="" className="!h-[48px]" {...field} />
                     </FormControl>
-                    <FormMessage />F
+                    <FormMessage />
                   </FormItem>
                 )}
               />

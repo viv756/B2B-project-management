@@ -3,8 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
+import { format } from "date-fns";
 
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
@@ -28,8 +36,8 @@ const LogoutDialog = (props: {
       setIsOpen(false);
     },
     onError: (error) => {
-      toast.error(`${error.message}`, {
-        description: Date.now(),
+      toast(`${error.message}`, {
+        description: format(Date.now(), "yyyy-MM-dd HH:mm"),
         action: {
           label: "Undo",
           onClick: () => console.log("Undo"),
@@ -55,7 +63,7 @@ const LogoutDialog = (props: {
         </DialogHeader>
         <DialogFooter>
           <Button disabled={isPending} type="button" onClick={handleLogout}>
-            {isPending && <Loader className="animate-spin"/>}
+            {isPending && <Loader className="animate-spin" />}
             Sign out
           </Button>
           <Button type="button" onClick={() => setIsOpen(false)}>

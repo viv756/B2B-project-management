@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
@@ -67,7 +68,7 @@ const EditWorkspaceForm = () => {
       },
       onError: (error) => {
         toast(`${error.message}`, {
-          description: Date.now(),
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

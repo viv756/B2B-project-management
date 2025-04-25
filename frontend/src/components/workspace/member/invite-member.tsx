@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { CheckIcon, CopyIcon, Loader } from "lucide-react";
+import { format } from "date-fns";
 
 import PermissionsGuard from "@/components/reusable/permission-guard";
 import { useAuthContext } from "@/context/auth.provider";
@@ -28,7 +29,7 @@ const InviteMember = () => {
       navigator.clipboard.writeText(inviteUrl).then(() => {
         setCopied(true);
         toast("Invite url copied to clipboard", {
-          description: Date.now(),
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

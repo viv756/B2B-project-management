@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
 
 import { ConfirmDialog } from "@/components/reusable/confirm-dialog";
 import PermissionsGuard from "@/components/reusable/permission-guard";
@@ -36,7 +38,7 @@ const DeleteWorkspaceCard = () => {
       },
       onError: (error) => {
         toast(`${error.message}`, {
-          description: Date.now(),
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

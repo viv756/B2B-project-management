@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Loader } from "lucide-react";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
 
 import { toast } from "sonner";
 import {
@@ -58,8 +59,8 @@ const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
         navigate(`/workspace/${workspace._id}`);
       },
       onError: (error) => {
-        toast.error("Error", {
-          description: error.message,
+        toast(error.message, {
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

@@ -148,7 +148,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
         });
 
         toast("Task has been created", {
-          description: Date.now(),
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
@@ -158,7 +158,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
       },
       onError: (error) => {
         toast(error.message, {
-          description: Date.now(),
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

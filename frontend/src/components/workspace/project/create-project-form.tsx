@@ -6,6 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
+import { format } from "date-fns";
 
 import EmojiPickerComponent from "@/components/emoji-picker";
 import { Button } from "@/components/ui/button";
@@ -71,8 +72,8 @@ const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
           queryKey: ["allprojects", workspaceId],
         });
 
-        toast.success(`Project created successfully`, {
-          description: Date.now(),
+        toast(`Project created successfully`, {
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
@@ -84,8 +85,8 @@ const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
       },
       onError: (error) => {
         console.log(error);
-        toast.error(`${error.message}`, {
-          description: Date.now(),
+        toast(`${error.message}`, {
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
