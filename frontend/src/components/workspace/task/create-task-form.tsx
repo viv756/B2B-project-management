@@ -231,7 +231,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
                       <FormLabel>Project</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a project" />
                           </SelectTrigger>
                         </FormControl>
@@ -274,7 +274,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
                     <FormLabel>Assigned To</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a assignee" />
                         </SelectTrigger>
                       </FormControl>
@@ -355,7 +355,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
                     <FormLabel>Status</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue
                             className="!text-muted-foreground !capitalize"
                             placeholder="Select a status"
@@ -389,7 +389,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
                     <FormLabel>Priority</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a priority" />
                         </SelectTrigger>
                       </FormControl>
