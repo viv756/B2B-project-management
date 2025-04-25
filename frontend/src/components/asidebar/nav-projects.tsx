@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ArrowRight, Folder, Loader, MoreHorizontal, Plus, Trash2 } from "lucide-react";
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -8,8 +13,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "../ui/sidebar";
-import { ArrowRight, Folder, Loader, MoreHorizontal, Plus, Trash2 } from "lucide-react";
-import { Permissions } from "@/constant";
 import PermissionsGuard from "../reusable/permission-guard";
 import { Button } from "../ui/button";
 import {
@@ -19,16 +22,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { ConfirmDialog } from "../reusable/confirm-dialog";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import useConfirmDialog from "@/hooks/use-confirm-dialog";
 import useCreateProjectDialog from "@/hooks/use-create-projects";
-import { deleteProjectMutationFn } from "@/lib/api";
 import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
+
 import { PaginationType } from "@/types/api.types";
-import { toast } from "sonner";
-import { ConfirmDialog } from "../reusable/confirm-dialog";
+import { Permissions } from "@/constant";
+import { deleteProjectMutationFn } from "@/lib/api";
 
 const NavProjects = () => {
   const navigate = useNavigate();
@@ -177,7 +180,6 @@ const NavProjects = () => {
                           <span>Delete Project</span>
                         </DropdownMenuItem>
                       </PermissionsGuard>
-
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </SidebarMenuItem>

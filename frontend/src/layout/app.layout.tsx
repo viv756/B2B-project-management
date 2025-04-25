@@ -1,9 +1,10 @@
+import { Outlet } from "react-router-dom";
+
+import { AuthProvider } from "@/context/auth.provider";
 import { AppSidebar } from "@/components/asidebar/appsidebar";
 import CreateWorkspaceDialog from "@/components/workspace/create-workspace-dialog";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import CreateProjectDialog from "@/components/workspace/project/create-project-dialog";
-import { AuthProvider } from "@/context/auth.provider";
-import { Outlet } from "react-router-dom";
 import Header from "@/components/header";
 
 const AppLayout = () => {

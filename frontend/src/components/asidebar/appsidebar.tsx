@@ -1,3 +1,8 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { EllipsisIcon, Loader, LogOut } from "lucide-react";
+
 import {
   Sidebar,
   SidebarContent,
@@ -12,13 +17,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "../logo";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { Link } from "react-router-dom";
 import WorkspaceSwitcher from "./workspaceSwitcher";
 import { Separator } from "../ui/separator";
 import { NavMain } from "./nav-main";
 import NavProjects from "./nav-projects";
-import { EllipsisIcon, Loader, LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,9 +30,9 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useAuthContext } from "@/context/auth.provider";
-import { useState } from "react";
 import LogoutDialog from "./logout-dialog";
+import { useAuthContext } from "@/context/auth.provider";
+import useWorkspaceId from "@/hooks/use-workspace-id";
 
 export function AppSidebar() {
   const { isLoading, user } = useAuthContext();

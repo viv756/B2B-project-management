@@ -1,11 +1,14 @@
-import PermissionsGuard from "@/components/reusable/permission-guard";
-import { Permissions } from "@/constant";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { getProjectByIdQueryFn } from "@/lib/api";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
+import PermissionsGuard from "@/components/reusable/permission-guard";
 import EditProjectDialog from "./edit-project-dialog";
 import CreateTaskDialog from "../task/create-task-dialog";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+
+import { Permissions } from "@/constant";
+import { getProjectByIdQueryFn } from "@/lib/api";
 
 const ProjectHeader = () => {
   const param = useParams();

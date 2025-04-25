@@ -5,6 +5,8 @@ import { DataTableColumnHeader } from "./table-column-header";
 import { DataTableRowActions } from "./table-row-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import {
   TaskPriorityEnum,
   TaskPriorityEnumType,
@@ -15,7 +17,6 @@ import { formatStatusToEnum, getAvatarColor, getAvatarFallbackText } from "@/lib
 import { priorities, statuses } from "./data";
 
 import { TaskType } from "@/types/api.types";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
   const columns: ColumnDef<TaskType>[] = [

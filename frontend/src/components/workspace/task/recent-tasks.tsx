@@ -1,12 +1,14 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { getAllTasksQueryFn } from "@/lib/api";
-import { getAvatarColor, getAvatarFallbackText, transformStatusEnum } from "@/lib/helper";
-import { TaskType } from "@/types/api.types";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+
+import { getAvatarColor, getAvatarFallbackText, transformStatusEnum } from "@/lib/helper";
+import { TaskType } from "@/types/api.types";
+import { getAllTasksQueryFn } from "@/lib/api";
 
 const RecentTasks = () => {
   const workspaceId = useWorkspaceId();

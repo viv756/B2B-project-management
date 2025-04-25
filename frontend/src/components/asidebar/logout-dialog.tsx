@@ -1,12 +1,14 @@
 import React, { useCallback } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader } from "../ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { Button } from "../ui/button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { logoutMutationFn } from "@/lib/api";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
+
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Button } from "../ui/button";
+import { toast } from "sonner";
+
+import { logoutMutationFn } from "@/lib/api";
 
 const LogoutDialog = (props: {
   isOpen: boolean;

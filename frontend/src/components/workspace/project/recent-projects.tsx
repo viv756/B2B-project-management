@@ -1,11 +1,13 @@
-import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
 import { Link } from "react-router-dom";
-import { format } from "date-fns";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
+
 import { Loader } from "lucide-react";
+import { format } from "date-fns";
+
+import useWorkspaceId from "@/hooks/use-workspace-id";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
+
+import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
 
 const RecentProjects = () => {
   const workspaceId = useWorkspaceId();

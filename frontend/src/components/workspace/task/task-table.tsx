@@ -1,21 +1,24 @@
 import { FC, useState } from "react";
-import { DataTable } from "./table/table";
 import { useParams } from "react-router-dom";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { getColumns } from "./table/columns";
-import useTaskTableFilter from "@/hooks/use-task-table-filters";
+
 import { useQuery } from "@tanstack/react-query";
-import { getAllTasksQueryFn } from "@/lib/api";
-import { TaskType } from "@/types/api.types";
-import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
-import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
-import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
+import { X } from "lucide-react";
+
+import { DataTable } from "./table/table";
+import { getColumns } from "./table/columns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./table/table-faceted-filter";
-import { priorities, statuses } from "./table/data";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import useTaskTableFilter from "@/hooks/use-task-table-filters";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
+import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
+
+import { TaskType } from "@/types/api.types";
+import { priorities, statuses } from "./table/data";
+import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
+import { getAllTasksQueryFn } from "@/lib/api";
 
 type Filters = ReturnType<typeof useTaskTableFilter>[0];
 type SetFilters = ReturnType<typeof useTaskTableFilter>[1];

@@ -1,8 +1,9 @@
-import { PermissionType } from "@/constant";
-import { useAuthContext } from "@/context/auth.provider";
-import useWorkspaceId from "@/hooks/use-workspace-id";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { useAuthContext } from "@/context/auth.provider";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+import { PermissionType } from "@/constant";
 
 const withPermission = (
   WrappedComponent: React.ComponentType,

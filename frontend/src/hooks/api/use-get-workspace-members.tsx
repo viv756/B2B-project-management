@@ -1,5 +1,6 @@
-import { getMembersInWorkspaceQueryFn } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
+
+import { getMembersInWorkspaceQueryFn } from "@/lib/api";
 
 const useGetWorkspaceMemmbers = (workspaceId: string) => {
   const query = useQuery({

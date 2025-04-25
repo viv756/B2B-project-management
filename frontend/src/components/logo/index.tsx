@@ -1,5 +1,6 @@
-import { AudioWaveform } from "lucide-react";
 import { Link } from "react-router-dom";
+
+import { AudioWaveform } from "lucide-react";
 
 const Logo = (props: { url?: string }) => {
   const { url = "/" } = props;

@@ -1,11 +1,12 @@
+import { createContext, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { PermissionType } from "@/constant";
 import useAuth from "@/hooks/api/use-auth";
 import useGetWorkspaceQuery from "@/hooks/api/use-get-workspace";
 import usePermissions from "@/hooks/use-permission";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { UserType, WorkspaceType } from "@/types/api.types";
-import { createContext, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
   user?: UserType;

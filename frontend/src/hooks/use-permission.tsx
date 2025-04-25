@@ -1,6 +1,7 @@
+import { useEffect, useMemo, useState } from "react";
+
 import { PermissionType } from "@/constant";
 import { UserType, WorkspaceWithMembersType } from "@/types/api.types";
-import { useEffect, useMemo, useState } from "react";
 
 const usePermissions = (
   user: UserType | undefined,

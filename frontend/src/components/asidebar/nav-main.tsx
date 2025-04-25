@@ -1,15 +1,18 @@
 "use client";
 
+import { Link, useLocation } from "react-router-dom";
+
 import { LucideIcon, Settings, Users, CheckCircle, LayoutDashboard } from "lucide-react";
+
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "@/context/auth.provider";
 import useWorkspaceId from "@/hooks/use-workspace-id";
+
 import { Permissions } from "@/constant";
 
 type ItemType = {

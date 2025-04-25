@@ -1,4 +1,9 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useQuery } from "@tanstack/react-query";
 import { Check, ChevronDown, Loader, Plus } from "lucide-react";
+
 import {
   SidebarGroupLabel,
   SidebarMenu,
@@ -8,22 +13,18 @@ import {
 } from "../ui/sidebar";
 import {
   DropdownMenu,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getAllWorkspacesUserIsMemberQueryFn } from "@/lib/api";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import {
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import useCreateWorkspaceDialog from "@/hooks/use-create-workspace-dialogue";
-import { useNavigate } from "react-router-dom";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+
 import { WorkspaceType } from "@/types/api.types";
+import { getAllWorkspacesUserIsMemberQueryFn } from "@/lib/api";
 
 type Workspace = {
   _id: string;

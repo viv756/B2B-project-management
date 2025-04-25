@@ -1,7 +1,8 @@
+import { Link, useNavigate } from "react-router-dom";
+
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link, useNavigate } from "react-router-dom";
 
 const GoogleOAuthFailure = () => {
   const navigate = useNavigate();

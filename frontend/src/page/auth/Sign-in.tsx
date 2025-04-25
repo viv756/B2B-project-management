@@ -1,7 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { format } from "date-fns";
+import { Loader } from "lucide-react";
+
 import Logo from "@/components/logo";
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
 import { Button } from "@/components/ui/button";
@@ -15,10 +20,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useMutation } from "@tanstack/react-query";
-import { loginMutationFn } from "@/lib/api";
 import { toast } from "sonner";
-import { Loader } from "lucide-react";
+
+import { loginMutationFn } from "@/lib/api";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -56,8 +60,8 @@ const SignIn = () => {
         navigate(decodedUrl || `/workspace/${user.currentWorkspace}`);
       },
       onError: (error) => {
-        toast.error(`${error.message}`, {
-          description: Date.now(),
+        toast(`${error.message}`, {
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),

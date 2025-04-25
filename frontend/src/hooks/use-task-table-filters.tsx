@@ -1,10 +1,11 @@
+import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
+
 import {
   TaskPriorityEnum,
   TaskPriorityEnumType,
   TaskStatusEnum,
   TaskStatusEnumType,
 } from "@/constant";
-import { parseAsString, parseAsStringEnum, useQueryStates } from "nuqs";
 
 const useTaskTableFilter = () => {
   return useQueryStates({

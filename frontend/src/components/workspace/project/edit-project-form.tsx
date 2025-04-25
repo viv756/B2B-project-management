@@ -1,3 +1,11 @@
+import { useEffect, useState } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Loader } from "lucide-react";
+
 import EmojiPickerComponent from "@/components/emoji-picker";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,16 +19,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { editProjectMutationFn } from "@/lib/api";
-import { ProjectType } from "@/types/api.types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+
+import { ProjectType } from "@/types/api.types";
+import { editProjectMutationFn } from "@/lib/api";
+
 
 const EditProjectForm = (props: { project?: ProjectType; onClose: () => void }) => {
   const { project, onClose } = props;

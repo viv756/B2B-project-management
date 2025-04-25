@@ -1,11 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Loader } from "lucide-react";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createWorkspaceMutationFn } from "@/lib/api";
+
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { Loader } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -18,6 +19,8 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+
+import { createWorkspaceMutationFn } from "@/lib/api";
 
 const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
   const navigate = useNavigate();

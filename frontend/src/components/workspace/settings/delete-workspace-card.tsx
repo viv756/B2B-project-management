@@ -1,14 +1,16 @@
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { ConfirmDialog } from "@/components/reusable/confirm-dialog";
 import PermissionsGuard from "@/components/reusable/permission-guard";
 import { Button } from "@/components/ui/button";
-import { Permissions } from "@/constant";
-import { useAuthContext } from "@/context/auth.provider";
 import useConfirmDialog from "@/hooks/use-confirm-dialog";
 import useWorkspaceId from "@/hooks/use-workspace-id";
-import { deleteWorkspaceMutationFn } from "@/lib/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+
+import { useAuthContext } from "@/context/auth.provider";
+import { Permissions } from "@/constant";
+import { deleteWorkspaceMutationFn } from "@/lib/api";
 
 const DeleteWorkspaceCard = () => {
   const { workspace } = useAuthContext();

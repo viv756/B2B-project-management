@@ -1,18 +1,21 @@
 import { useEffect } from "react";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
+
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Loader } from "lucide-react";
 import { useAuthContext } from "@/context/auth.provider";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useWorkspaceId from "@/hooks/use-workspace-id";
-import { editWorkspaceMutationFn } from "@/lib/api";
 import { toast } from "sonner";
 import { Permissions } from "@/constant";
+
+import { editWorkspaceMutationFn } from "@/lib/api";
 
 const EditWorkspaceForm = () => {
   const { workspace, hasPermission } = useAuthContext();

@@ -1,7 +1,9 @@
 import { useState } from "react";
+
+import { Plus } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
 import CreateTaskForm from "./create-task-form";
 
 const CreateTaskDialog = (props: { projectId?: string }) => {

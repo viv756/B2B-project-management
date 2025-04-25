@@ -1,13 +1,16 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
+
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import useAuth from "@/hooks/api/use-auth";
-import { invitedUserJoinWorkspaceMutationFn } from "@/lib/api";
-import { BASE_ROUTE } from "@/routes/common/routePaths";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
 import { toast } from "sonner";
+import useAuth from "@/hooks/api/use-auth";
+import { BASE_ROUTE } from "@/routes/common/routePaths";
+
+import { invitedUserJoinWorkspaceMutationFn } from "@/lib/api";
 
 const InviteUser = () => {
   const navigate = useNavigate();

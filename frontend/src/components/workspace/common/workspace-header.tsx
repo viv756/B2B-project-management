@@ -1,6 +1,7 @@
-import { useAuthContext } from "@/context/auth.provider";
 import { Loader } from "lucide-react";
+
 import { Avatar, AvatarFallback } from "../../ui/avatar";
+import { useAuthContext } from "@/context/auth.provider";
 
 const WorkspaceHeader = () => {
   const { workspaceLoading, workspace } = useAuthContext();

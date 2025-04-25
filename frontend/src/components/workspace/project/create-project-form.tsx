@@ -1,3 +1,12 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
+
 import EmojiPickerComponent from "@/components/emoji-picker";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,15 +21,9 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import useWorkspaceId from "@/hooks/use-workspace-id";
-import { createProjectMutationFn } from "@/lib/api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { z } from "zod";
+
+import { createProjectMutationFn } from "@/lib/api";
 
 const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
   const navigate = useNavigate();

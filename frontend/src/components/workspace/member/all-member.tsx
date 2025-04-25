@@ -1,14 +1,9 @@
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, Loader } from "lucide-react";
-import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { useAuthContext } from "@/context/auth.provider";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Permissions } from "@/constant";
-import { changeWorkspaceMemberRoleMutationFn } from "@/lib/api";
 import { toast } from "sonner";
 import {
   Command,
@@ -18,6 +13,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
+import { useAuthContext } from "@/context/auth.provider";
+
+import { Permissions } from "@/constant";
+import { changeWorkspaceMemberRoleMutationFn } from "@/lib/api";
+import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
 
 const AllMember = () => {
   const { user, hasPermission } = useAuthContext();

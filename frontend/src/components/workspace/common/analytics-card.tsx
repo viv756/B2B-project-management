@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import { Activity, ArrowBigDown, ArrowBigUp, Loader } from "lucide-react";
+
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 
 const AnalyticsCard = (props: { title: string; value: number; isLoading: boolean }) => {
   const { title, value, isLoading } = props;

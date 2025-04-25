@@ -1,10 +1,11 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
-import { AvatarImage } from "@radix-ui/react-avatar";
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
+import useWorkspaceId from "@/hooks/use-workspace-id";
+
+import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
 
 const RecentMembers = () => {
   const workspaceId = useWorkspaceId();

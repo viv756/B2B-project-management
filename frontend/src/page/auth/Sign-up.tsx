@@ -1,3 +1,11 @@
+import { Link, useNavigate } from "react-router-dom";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { format } from "date-fns";
+
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
@@ -11,13 +19,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerMutationFn } from "@/lib/api";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { z } from "zod";
+
+import { registerMutationFn } from "@/lib/api";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -55,8 +59,8 @@ const SignUp = () => {
       },
       onError: (error) => {
         console.log(error);
-        toast.error(`${error.message}`, {
-          description: Date.now(),
+        toast(`${error.message}`, {
+          description: format(Date.now(), "yyyy-MM-dd HH:mm"),
           action: {
             label: "Undo",
             onClick: () => console.log("Undo"),
