@@ -35,6 +35,8 @@ import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/h
 import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
 import { createTaskMutationFn } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 
 export default function CreateTaskForm(props: { projectId?: string; onClose: () => void }) {
   const { projectId, onClose } = props;
@@ -171,7 +173,7 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
   return (
     <div className="w-full h-auto max-w-full">
       <div className="h-full">
-        <div className="mb-5 pb-2 border-b">
+        {/* <div className="mb-5 pb-2 border-b">
           <h1
             className="text-xl tracking-[-0.16px] dark:text-[#fcfdffef] font-semibold mb-1
            text-center sm:text-left">
@@ -180,7 +182,14 @@ export default function CreateTaskForm(props: { projectId?: string; onClose: () 
           <p className="text-muted-foreground text-sm leading-tight">
             Organize and manage tasks, resources, and team collaboration
           </p>
-        </div>
+        </div> */}
+        <DialogHeader>
+          <DialogTitle> Create Task</DialogTitle>
+          <DialogDescription>
+            Organize and manage tasks, resources, and team collaboration
+          </DialogDescription>
+        </DialogHeader>
+        <Separator className="my-3" />
         <Form {...form}>
           <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
             <div>

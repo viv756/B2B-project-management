@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { toast } from "sonner";
@@ -99,7 +101,7 @@ const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="w-full h-auto max-w-full">
       <div className="h-full">
-        <div className="mb-5 pb-2 border-b">
+        {/* <div className="mb-5 pb-2 border-b">
           <h1
             className="text-xl tracking-[-0.16px] dark:text-[#fcfdffef] font-semibold mb-1
            text-center sm:text-left">
@@ -108,7 +110,14 @@ const CreateProjectForm = ({ onClose }: { onClose: () => void }) => {
           <p className="text-muted-foreground text-sm leading-tight">
             Organize and manage tasks, resources, and team collaboration
           </p>
-        </div>
+        </div> */}
+        <DialogHeader>
+          <DialogTitle> Create Project</DialogTitle>
+          <DialogDescription>
+            Organize and manage tasks, resources, and team collaboration.
+          </DialogDescription>
+        </DialogHeader>
+        <Separator className="my-3" />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-4">

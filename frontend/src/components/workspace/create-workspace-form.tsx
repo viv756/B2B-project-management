@@ -20,6 +20,8 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Separator } from "../ui/separator";
 
 import { createWorkspaceMutationFn } from "@/lib/api";
 
@@ -73,7 +75,7 @@ const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
   return (
     <main className="w-full flex flex-row min-h-[590px] h-auto max-w-full">
       <div className="h-full px-10 py-10 flex-1">
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <h1
             className="text-2xl tracking-[-0.16px] dark:text-[#fcfdffef] font-semibold mb-1.5
            text-center sm:text-left">
@@ -83,7 +85,15 @@ const CreateWorkspaceForm = ({ onClose }: { onClose: () => void }) => {
             Boost your productivity by making it easier for everyone to access projects in one
             location.
           </p>
-        </div>
+        </div> */}
+        <DialogHeader>
+          <DialogTitle> Let's build a Workspace</DialogTitle>
+          <DialogDescription>
+            Boost your productivity by making it easier for everyone to access projects in one
+            location.
+          </DialogDescription>
+        </DialogHeader>
+        <Separator className="my-3" />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-4">
