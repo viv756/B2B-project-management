@@ -9,7 +9,7 @@ import WorkspaceAnalytics from "@/components/workspace/workspace-analytics";
 
 const WorkspaceDashboard = () => {
   return (
-    <main className="flex flex-1 flex-col py-4 md:pt-3">
+    <main className="flex flex-1 gap-5 flex-col py-4 md:pt-3">
       <div className="flex items-center justify-between space-y-2 mb-6">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Workspace Overview</h2>
