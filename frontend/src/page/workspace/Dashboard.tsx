@@ -6,8 +6,11 @@ import RecentMembers from "@/components/workspace/member/recent-members";
 import RecentProjects from "@/components/workspace/project/recent-projects";
 import RecentTasks from "@/components/workspace/task/recent-tasks";
 import WorkspaceAnalytics from "@/components/workspace/workspace-analytics";
+import useCreateProjectDialog from "@/hooks/use-create-projects";
 
 const WorkspaceDashboard = () => {
+  const { onOpen } = useCreateProjectDialog();
+
   return (
     <main className="flex flex-1 gap-5 flex-col py-4 md:pt-3">
       <div className="flex items-center justify-between space-y-2 mb-6">
@@ -15,7 +18,7 @@ const WorkspaceDashboard = () => {
           <h2 className="text-2xl font-bold tracking-tight">Workspace Overview</h2>
           <p className="text-muted-foreground">Here&apos;s an overview for this workspace!</p>
         </div>
-        <Button>
+        <Button onClick={onOpen}>
           <Plus />
           New project
         </Button>
