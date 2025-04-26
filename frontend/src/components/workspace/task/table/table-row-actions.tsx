@@ -24,6 +24,8 @@ interface DataTableRowActionsProps {
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
   const [openDeleteDialog, setOpenDialog] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const queryClient = useQueryClient();
   const workspaceId = useWorkspaceId();
 
@@ -46,7 +48,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             queryKey: ["all-tasks", workspaceId],
           });
           toast(data.message);
-          setTimeout(() => setOpenDialog(false), 100);
+          setOpenDialog(false);
         },
         onError: (error) => {
           toast(error.message);
@@ -57,7 +59,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
             <MoreHorizontal />
@@ -69,7 +71,10 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className={`!text-destructive cursor-pointer ${taskId}`}
-            onClick={() => setOpenDialog(true)}>
+            onClick={() => {
+              setMenuOpen(false);
+              setOpenDialog(true);
+            }}>
             Delete Task
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
