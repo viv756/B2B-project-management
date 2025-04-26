@@ -32,8 +32,8 @@ const LogoutDialog = (props: {
       queryClient.resetQueries({
         queryKey: ["authUser"],
       });
-      navigate("/");
       setIsOpen(false);
+      navigate("/");
     },
     onError: (error) => {
       toast(`${error.message}`, {

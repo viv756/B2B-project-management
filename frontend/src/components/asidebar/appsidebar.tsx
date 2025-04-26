@@ -24,9 +24,7 @@ import NavProjects from "./nav-projects";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -41,6 +39,7 @@ export function AppSidebar() {
   const { open } = useSidebar();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
@@ -74,7 +73,7 @@ export function AppSidebar() {
               {isLoading ? (
                 <Loader size="24px" className="place-self-center self-center animate-spin" />
               ) : (
-                <DropdownMenu>
+                <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
                   <DropdownMenuTrigger asChild>
                     <SidebarMenuButton
                       size="lg"
@@ -98,9 +97,11 @@ export function AppSidebar() {
                     side={"bottom"}
                     align="start"
                     sideOffset={4}>
-                    <DropdownMenuGroup></DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setIsOpen(true)}>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        setMenuOpen(false); // Close dropdown
+                        setIsOpen(true); // Open logout dialog
+                      }}>
                       <LogOut />
                       Log out
                     </DropdownMenuItem>
