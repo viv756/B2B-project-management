@@ -22,7 +22,7 @@ const CreateTaskDialog = (props: { projectId?: string }) => {
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-lg max-h-auto my-5 border-0">
-          <CreateTaskForm projectId={props.projectId} onClose={onClose}/>
+          <CreateTaskForm projectId={props.projectId} onClose={onClose} />
         </DialogContent>
       </Dialog>
     </div>
