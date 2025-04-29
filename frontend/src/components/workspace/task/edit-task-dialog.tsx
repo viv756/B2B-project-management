@@ -1,13 +1,21 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import EditTaskForm from "./edit-task-form";
 
-const EditTaskDialog = (props: { isOpen: boolean; onClose: () => void }) => {
-  const { isOpen, onClose } = props;
+interface EditTaskprops {
+  isOpen: boolean;
+  onClose: () => void;
+  projectId: string;
+  taskId: string;
+  workspaceId: string;
+}
+
+const EditTaskDialog = (props: EditTaskprops) => {
+  const { isOpen, onClose, projectId, taskId } = props;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg max-h-auto my-5 border-0">
-        <EditTaskForm />
+        <EditTaskForm projectId={projectId} taskId={taskId} onClose={onClose} isOpen={isOpen} />
       </DialogContent>
     </Dialog>
   );

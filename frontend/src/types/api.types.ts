@@ -230,6 +230,24 @@ export type CreateTaskPayloadType = {
   };
 };
 
+export type EditTaskPayloadType = {
+  taskId: string;
+  workspaceId: string;
+  projectId: string;
+  data: {
+    title: string;
+    description: string;
+    priority: TaskPriorityEnumType;
+    status: TaskStatusEnumType;
+    assignedTo: string;
+    dueDate: string;
+  };
+};
+
+export type TaskResponseTye = {
+  message: string;
+  task: TaskType;
+};
 
 export type AllMembersInWorkspaceResponseType = {
   message: string;

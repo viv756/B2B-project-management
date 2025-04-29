@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Row } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,19 +16,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ConfirmDialog } from "@/components/reusable/confirm-dialog";
-import { TaskType } from "@/types/api.types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import EditTaskDialog from "../edit-task-dialog";
 import useWorkspaceId from "@/hooks/use-workspace-id";
+
 import { deleteTaskMutationFn } from "@/lib/api";
-import { toast } from "sonner";
+import { TaskType } from "@/types/api.types";
 
 interface DataTableRowActionsProps {
   row: Row<TaskType>;
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
+  const params = useParams()
   const [openDeleteDialog, setOpenDialog] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const queryClient = useQueryClient();
   const workspaceId = useWorkspaceId();
@@ -35,6 +41,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
 
   const taskId = row.original._id as string;
   const taskCode = row.original.taskCode;
+  const projectId = row.original.project?._id as string || params.projectId as string || ""
 
   const handleConfirm = () => {
     mutate(
@@ -67,7 +74,14 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem className="cursor-pointer">Edit Task</DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              setMenuOpen(false);
+              setEditDialogOpen(true);
+            }}>
+            Edit Task
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className={`!text-destructive cursor-pointer ${taskId}`}
@@ -90,6 +104,14 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         description={`Are you sure you want to delete ${taskCode}`}
         confirmText="Delete"
         cancelText="Cancel"
+      />
+
+      <EditTaskDialog
+        isOpen={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        projectId={projectId}
+        taskId={taskId}
+        workspaceId={workspaceId}
       />
     </>
   );

@@ -13,12 +13,14 @@ import {
   CreateWorkspaceType,
   CurrentUserResponseType,
   EditProjectPayloadType,
+  EditTaskPayloadType,
   EditWorkspaceType,
   LoginResponseType,
   loginType,
   ProjectByIdPayloadType,
   ProjectResponseType,
   registerType,
+  TaskResponseTye,
   WorkspaceByIdResponseType,
 } from "@/types/api.types";
 import API from "./axios.client";
@@ -107,9 +109,7 @@ export const getProjectByIdQueryFn = async ({
   workspaceId,
   projectId,
 }: ProjectByIdPayloadType): Promise<ProjectResponseType> => {
-  const response = await API.get(
-    `/project/${projectId}/workspace/${workspaceId}`
-  );
+  const response = await API.get(`/project/${projectId}/workspace/${workspaceId}`);
   return response.data;
 };
 
@@ -118,10 +118,7 @@ export const editProjectMutationFn = async ({
   workspaceId,
   data,
 }: EditProjectPayloadType): Promise<ProjectResponseType> => {
-  const response = await API.put(
-    `/project/${projectId}/workspace/${workspaceId}/update`,
-    data
-  );
+  const response = await API.put(`/project/${projectId}/workspace/${workspaceId}/update`, data);
   return response.data;
 };
 
@@ -129,9 +126,7 @@ export const getProjectAnalyticsQueryFn = async ({
   workspaceId,
   projectId,
 }: ProjectByIdPayloadType): Promise<AnalyticsResponseType> => {
-  const response = await API.get(
-    `/project/${projectId}/workspace/${workspaceId}/analytics`
-  );
+  const response = await API.get(`/project/${projectId}/workspace/${workspaceId}/analytics`);
   return response.data;
 };
 
@@ -146,6 +141,34 @@ export const deleteProjectMutationFn = async ({
 };
 
 // ************************************ TASK ********************************************** //
+
+export const getTaskByIdQueryFn = async ({
+  taskId,
+  projectId,
+  workspaceId,
+}: {
+  taskId: string;
+  workspaceId: string;
+  projectId: string;
+}): Promise<TaskResponseTye> => {
+  const response = await API.get(`/task/${taskId}/project/${projectId}/workspace/${workspaceId}`);
+  return response.data;
+};
+
+export const editTaskMutationFn = async ({
+  taskId,
+  projectId,
+  workspaceId,
+  data,
+}: EditTaskPayloadType) => {
+  const response = await API.put(
+    `/task/${taskId}/project/${projectId}/workspace/${workspaceId}/update`,
+    data
+  );
+
+  return response.data;
+};
+
 export const getAllTasksQueryFn = async ({
   workspaceId,
   keyword,
