@@ -1,5 +1,6 @@
-import BaseLayout from "@/layout/base.layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import BaseLayout from "@/layout/base.layout";
 import { authenticationRoutePaths, baseRoutePaths, protectedRoutePaths } from "./common/routes";
 import AuthRoute from "./auth.route";
 import ProtectedRoute from "./Protected.route";
