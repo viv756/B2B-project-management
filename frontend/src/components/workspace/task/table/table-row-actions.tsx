@@ -18,6 +18,7 @@ import {
 import { ConfirmDialog } from "@/components/reusable/confirm-dialog";
 import EditTaskDialog from "../edit-task-dialog";
 import useWorkspaceId from "@/hooks/use-workspace-id";
+import useEditTaskDialog from "@/hooks/use-edit-task-dialog";
 
 import { deleteTaskMutationFn } from "@/lib/api";
 import { TaskType } from "@/types/api.types";
@@ -27,11 +28,11 @@ interface DataTableRowActionsProps {
 }
 
 export function DataTableRowActions({ row }: DataTableRowActionsProps) {
-  const params = useParams()
+  const params = useParams();
   const [openDeleteDialog, setOpenDialog] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-
+  
+  const { onOpen } = useEditTaskDialog();
   const queryClient = useQueryClient();
   const workspaceId = useWorkspaceId();
 
@@ -41,7 +42,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
 
   const taskId = row.original._id as string;
   const taskCode = row.original.taskCode;
-  const projectId = row.original.project?._id as string || params.projectId as string || ""
+  const projectId = (row.original.project?._id as string) || (params.projectId as string) || "";
 
   const handleConfirm = () => {
     mutate(
@@ -78,7 +79,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             className="cursor-pointer"
             onClick={() => {
               setMenuOpen(false);
-              setEditDialogOpen(true);
+              onOpen();
             }}>
             Edit Task
           </DropdownMenuItem>
@@ -106,13 +107,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         cancelText="Cancel"
       />
 
-      <EditTaskDialog
-        isOpen={editDialogOpen}
-        onClose={() => setEditDialogOpen(false)}
-        projectId={projectId}
-        taskId={taskId}
-        workspaceId={workspaceId}
-      />
+      <EditTaskDialog projectId={projectId} taskId={taskId} />
     </>
   );
 }
