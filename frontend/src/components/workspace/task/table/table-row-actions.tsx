@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Row } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,55 +13,22 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ConfirmDialog } from "@/components/reusable/confirm-dialog";
-import EditTaskDialog from "../edit-task-dialog";
-import useWorkspaceId from "@/hooks/use-workspace-id";
-import useEditTaskDialog from "@/hooks/use-edit-task-dialog";
 
-import { deleteTaskMutationFn } from "@/lib/api";
 import { TaskType } from "@/types/api.types";
 
 interface DataTableRowActionsProps {
   row: Row<TaskType>;
+  onDelete: (taskId: string, taskCode: string) => void;
+  onEdit: (projectId: string, taskId: string, value: TaskType) => void;
 }
 
-export function DataTableRowActions({ row }: DataTableRowActionsProps) {
-  const params = useParams();
-  const [openDeleteDialog, setOpenDialog] = useState(false);
+export function DataTableRowActions({ row, onDelete, onEdit }: DataTableRowActionsProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  
-  const { onOpen } = useEditTaskDialog();
-  const queryClient = useQueryClient();
-  const workspaceId = useWorkspaceId();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: deleteTaskMutationFn,
-  });
+  const params = useParams();
 
   const taskId = row.original._id as string;
   const taskCode = row.original.taskCode;
   const projectId = (row.original.project?._id as string) || (params.projectId as string) || "";
-
-  const handleConfirm = () => {
-    mutate(
-      {
-        workspaceId,
-        taskId,
-      },
-      {
-        onSuccess: (data) => {
-          queryClient.invalidateQueries({
-            queryKey: ["all-tasks", workspaceId],
-          });
-          toast(data.message);
-          setOpenDialog(false);
-        },
-        onError: (error) => {
-          toast(error.message);
-        },
-      }
-    );
-  };
 
   return (
     <>
@@ -79,7 +44,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             className="cursor-pointer"
             onClick={() => {
               setMenuOpen(false);
-              onOpen();
+              onEdit(projectId, taskId, row.original);
             }}>
             Edit Task
           </DropdownMenuItem>
@@ -88,26 +53,13 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             className={`!text-destructive cursor-pointer ${taskId}`}
             onClick={() => {
               setMenuOpen(false);
-              setOpenDialog(true);
+              onDelete(taskId, taskCode);
             }}>
             Delete Task
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <ConfirmDialog
-        isOpen={openDeleteDialog}
-        isLoading={isPending}
-        onClose={() => setOpenDialog(false)}
-        onConfirm={handleConfirm}
-        title="Delete Task"
-        description={`Are you sure you want to delete ${taskCode}`}
-        confirmText="Delete"
-        cancelText="Cancel"
-      />
-
-      <EditTaskDialog projectId={projectId} taskId={taskId} />
     </>
   );
 }

@@ -35,7 +35,8 @@ export default function WorkspaceSwitcher() {
   const navigate = useNavigate();
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace>();
   const { isMobile } = useSidebar();
-
+  
+  const [open, setOpen] = useState(false);
   const { onOpen } = useCreateWorkspaceDialog();
   const workspaceId = useWorkspaceId();
 
@@ -77,7 +78,7 @@ export default function WorkspaceSwitcher() {
       </SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
-          <DropdownMenu>
+          <DropdownMenu open={open} onOpenChange={setOpen}>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
@@ -128,7 +129,12 @@ export default function WorkspaceSwitcher() {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="gap-2 p-2 !cursor-pointer" onClick={onOpen}>
+              <DropdownMenuItem
+                className="gap-2 p-2 !cursor-pointer"
+                onClick={() => {
+                  setOpen(false);
+                  onOpen();
+                }}>
                 <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                   <Plus className="size-4" />
                 </div>

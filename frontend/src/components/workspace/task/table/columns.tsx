@@ -7,18 +7,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import {
-  TaskPriorityEnum,
-  TaskPriorityEnumType,
-  TaskStatusEnum,
-  TaskStatusEnumType,
-} from "@/constant";
-import { formatStatusToEnum, getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
+import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
 import { priorities, statuses } from "./data";
 
 import { TaskType } from "@/types/api.types";
 
-export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
+interface Taskprops {
+  projectId?: string;
+  onDelete: (taskId: string, taskCode: string) => void;
+  onEdit: (projectId: string, taskId: string, task: TaskType) => void;
+}
+
+export const getColumns = ({ projectId, onDelete, onEdit }: Taskprops): ColumnDef<TaskType>[] => {
   const columns: ColumnDef<TaskType>[] = [
     {
       id: "_id",
@@ -130,7 +130,6 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
           return null;
         }
 
-        const statusKey = formatStatusToEnum(status.value) as TaskStatusEnumType;
         const Icon = status.icon;
 
         if (!Icon) {
@@ -140,7 +139,7 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
         return (
           <div className="flex lg:w-[120px] items-center">
             <Badge
-              variant={TaskStatusEnum[statusKey]}
+              variant="outline"
               className="flex w-auto p-1 px-2 gap-1 font-medium shadow-sm uppercase border-0">
               <Icon className="h-4 w-4 rounded-full text-inherit" />
               <span>{status.label}</span>
@@ -159,7 +158,6 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
           return null;
         }
 
-        const statusKey = formatStatusToEnum(priority.value) as TaskPriorityEnumType;
         const Icon = priority.icon;
 
         if (!Icon) {
@@ -168,12 +166,6 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
 
         return (
           <div className="flex gap-1 items-center">
-            {/* <Badge
-              variant={TaskPriorityEnum[statusKey]}
-              className="flex p-1 gap-1 !bg-transparent font-medium !shadow-none uppercase border-0">
-              <Icon className="h-4 w-4 rounded-full text-inherit" />
-              <span>{priority.label}</span>
-            </Badge> */}
             <Icon className=" w-4 rounded-full text-inherit" />
             <span className=" text-[12px] uppercase">{priority.label}</span>
           </div>
@@ -185,7 +177,7 @@ export const getColumns = (projectId?: string): ColumnDef<TaskType>[] => {
       cell: ({ row }) => {
         return (
           <>
-            <DataTableRowActions row={row} />
+            <DataTableRowActions row={row} onDelete={onDelete} onEdit={onEdit} />
           </>
         );
       },

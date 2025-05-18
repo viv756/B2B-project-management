@@ -1,15 +1,18 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { X } from "lucide-react";
 
 import { DataTable } from "./table/table";
 import { getColumns } from "./table/columns";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./table/table-faceted-filter";
+import { ConfirmDialog } from "@/components/reusable/confirm-dialog";
 import { Button } from "@/components/ui/button";
+import EditTaskDialog from "./edit-task-dialog";
 import useTaskTableFilter from "@/hooks/use-task-table-filters";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
@@ -18,7 +21,7 @@ import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
 import { TaskType } from "@/types/api.types";
 import { priorities, statuses } from "./table/data";
 import { getAvatarColor, getAvatarFallbackText } from "@/lib/helper";
-import { getAllTasksQueryFn } from "@/lib/api";
+import { deleteTaskMutationFn, getAllTasksQueryFn } from "@/lib/api";
 
 type Filters = ReturnType<typeof useTaskTableFilter>[0];
 type SetFilters = ReturnType<typeof useTaskTableFilter>[1];
@@ -33,13 +36,25 @@ interface DataTableFilterToolbarProps {
 const TaskTable = () => {
   const param = useParams();
   const projectId = param.projectId as string;
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [deleteTaskId, setDeleteTaskId] = useState<string>("");
+  const [taskCode, setDeleteTaskCode] = useState<string>("");
+  const [editTaskDilogOpen, setEditTaskDialogOpen] = useState(false);
+  const [isEditTaskId, setIsEditTaskId] = useState<string>("");
+  const [isEditprojectId, setIsEditProjectId] = useState<string>("");
+  const [editTask, setEditTask] = useState<TaskType>();
+
+  const queryClient = useQueryClient();
+  const workspaceId = useWorkspaceId();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteTaskMutationFn,
+  });
 
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
   const [filters, setFilters] = useTaskTableFilter();
-  const workspaceId = useWorkspaceId();
-  const columns = getColumns(projectId);
 
   const { data, isLoading } = useQuery({
     queryKey: ["all-tasks", workspaceId, pageSize, pageNumber, filters, projectId],
@@ -69,6 +84,42 @@ const TaskTable = () => {
     setPageSize(size);
   };
 
+  // handle delete task 
+  const handleConfirm = useCallback((taskId: string) => {
+    mutate(
+      {
+        workspaceId,
+        taskId,
+      },
+      {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries({
+            queryKey: ["all-tasks", workspaceId],
+          });
+          toast(data.message);
+          setOpenDeleteDialog(false);
+        },
+        onError: (error) => {
+          toast(error.message);
+        },
+      }
+    );
+  }, []);
+
+  const onDelete = useCallback((taskId: string, taskCode: string) => {
+    setDeleteTaskId(taskId);
+    setDeleteTaskCode(taskCode);
+    setOpenDeleteDialog(true);
+  }, []);
+
+  const onEdit = useCallback((projectId: string, taskId: string, task: TaskType) => {
+    setIsEditProjectId(projectId);
+    setIsEditTaskId(taskId);
+    setEditTask(task);
+    setEditTaskDialogOpen(true);
+  }, []);
+
+  const columns = useMemo(() => getColumns({ projectId, onDelete, onEdit }), []);
   return (
     <div className="w-full relative">
       <DataTable
@@ -91,6 +142,27 @@ const TaskTable = () => {
           />
         }
       />
+
+      <ConfirmDialog
+        isOpen={openDeleteDialog}
+        isLoading={isPending}
+        onClose={() => setOpenDeleteDialog(false)}
+        onConfirm={() => handleConfirm(deleteTaskId)}
+        title="Delete Task"
+        description={`Are you sure you want to delete ${taskCode}`}
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
+
+      {editTask && (
+        <EditTaskDialog
+          projectId={isEditprojectId}
+          taskId={isEditTaskId}
+          task={editTask}
+          isOpen={editTaskDilogOpen}
+          onClose={() => setEditTaskDialogOpen(false)}
+        />
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CalendarIcon, Loader } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 
 import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -34,30 +34,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useGetWorkspaceMemmbers from "@/hooks/api/use-get-workspace-members";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 
-import { editTaskMutationFn, getTaskByIdQueryFn } from "@/lib/api";
+import { editTaskMutationFn } from "@/lib/api";
 import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
 import { cn } from "@/lib/utils";
 import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/helper";
+import { TaskType } from "@/types/api.types";
 
 const EditTaskForm = (props: {
   projectId: string;
   taskId: string;
   isOpen: boolean;
+  task: TaskType;
   onClose: () => void;
 }) => {
-  const { projectId, taskId, onClose, isOpen } = props;
+  const { projectId, taskId, onClose, isOpen, task } = props;
 
   const workspaceId = useWorkspaceId();
   const queryClient = useQueryClient();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["singleTask", taskId, projectId, workspaceId],
-    queryFn: () => getTaskByIdQueryFn({ taskId, projectId, workspaceId }),
-    staleTime: 0,
-    enabled: isOpen && !!taskId && !!projectId && !!workspaceId,
-  });
-
-  const task = data?.task;
 
   const { mutate, isPending } = useMutation({
     mutationFn: editTaskMutationFn,
@@ -99,7 +92,7 @@ const EditTaskForm = (props: {
       form.setValue("status", task.status);
       form.setValue("priority", task.priority);
     }
-  }, [form, task]);
+  }, [form, isOpen, task]);
 
   const { data: memberData } = useGetWorkspaceMemmbers(workspaceId);
 
@@ -185,7 +178,7 @@ const EditTaskForm = (props: {
         </DialogHeader>
         <Separator className="my-3" />
 
-        {isLoading || !task ? (
+        {!task ? (
           <div className="w-full h-[520px] flex items-center justify-center max-w-full">
             <Loader className="animate-spin " />
           </div>
