@@ -40,8 +40,6 @@ const TaskTable = () => {
   const [deleteTaskId, setDeleteTaskId] = useState<string>("");
   const [taskCode, setDeleteTaskCode] = useState<string>("");
   const [editTaskDilogOpen, setEditTaskDialogOpen] = useState(false);
-  const [isEditTaskId, setIsEditTaskId] = useState<string>("");
-  const [isEditprojectId, setIsEditProjectId] = useState<string>("");
   const [editTask, setEditTask] = useState<TaskType>();
 
   const queryClient = useQueryClient();
@@ -84,7 +82,7 @@ const TaskTable = () => {
     setPageSize(size);
   };
 
-  // handle delete task 
+  // handle delete task
   const handleConfirm = useCallback((taskId: string) => {
     mutate(
       {
@@ -112,9 +110,7 @@ const TaskTable = () => {
     setOpenDeleteDialog(true);
   }, []);
 
-  const onEdit = useCallback((projectId: string, taskId: string, task: TaskType) => {
-    setIsEditProjectId(projectId);
-    setIsEditTaskId(taskId);
+  const onEdit = useCallback((task: TaskType) => {
     setEditTask(task);
     setEditTaskDialogOpen(true);
   }, []);
@@ -156,8 +152,6 @@ const TaskTable = () => {
 
       {editTask && (
         <EditTaskDialog
-          projectId={isEditprojectId}
-          taskId={isEditTaskId}
           task={editTask}
           isOpen={editTaskDilogOpen}
           onClose={() => setEditTaskDialogOpen(false)}

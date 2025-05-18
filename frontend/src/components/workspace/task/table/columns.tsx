@@ -15,7 +15,7 @@ import { TaskType } from "@/types/api.types";
 interface Taskprops {
   projectId?: string;
   onDelete: (taskId: string, taskCode: string) => void;
-  onEdit: (projectId: string, taskId: string, task: TaskType) => void;
+  onEdit: (task: TaskType) => void;
 }
 
 export const getColumns = ({ projectId, onDelete, onEdit }: Taskprops): ColumnDef<TaskType>[] => {

@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CalendarIcon, Loader } from "lucide-react";
@@ -41,13 +39,10 @@ import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/h
 import { TaskType } from "@/types/api.types";
 
 const EditTaskForm = (props: {
-  projectId: string;
-  taskId: string;
-  isOpen: boolean;
   task: TaskType;
   onClose: () => void;
 }) => {
-  const { projectId, taskId, onClose, isOpen, task } = props;
+  const { onClose, task } = props;
 
   const workspaceId = useWorkspaceId();
   const queryClient = useQueryClient();
@@ -79,20 +74,14 @@ const EditTaskForm = (props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      title: task?.title ?? "",
+      description: task?.description ?? "",
+      status: task?.status ?? "TODO",
+      priority: task?.priority ?? "MEDIUM",
+      assignedTo: task.assignedTo?._id ?? "",
+      dueDate: task?.dueDate ? new Date(task.dueDate) : new Date(),
     },
   });
-
-  useEffect(() => {
-    if (task) {
-      form.setValue("title", task.title);
-      form.setValue("description", task.description ?? "");
-      form.setValue("assignedTo", task.assignedTo?._id ?? "");
-      form.setValue("dueDate", new Date(task.dueDate));
-      form.setValue("status", task.status);
-      form.setValue("priority", task.priority);
-    }
-  }, [form, isOpen, task]);
 
   const { data: memberData } = useGetWorkspaceMemmbers(workspaceId);
 
@@ -127,9 +116,9 @@ const EditTaskForm = (props: {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (isPending) return;
     const payload = {
-      taskId,
+      taskId: task._id,
+      projectId: task.project?._id ?? "",
       workspaceId,
-      projectId,
       data: {
         ...values,
         dueDate: values.dueDate.toISOString(),
@@ -138,10 +127,6 @@ const EditTaskForm = (props: {
 
     mutate(payload, {
       onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ["project-analytics", projectId],
-        });
-
         queryClient.invalidateQueries({
           queryKey: ["all-tasks", workspaceId],
         });

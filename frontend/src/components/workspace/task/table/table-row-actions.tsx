@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { Row } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
@@ -19,16 +18,14 @@ import { TaskType } from "@/types/api.types";
 interface DataTableRowActionsProps {
   row: Row<TaskType>;
   onDelete: (taskId: string, taskCode: string) => void;
-  onEdit: (projectId: string, taskId: string, value: TaskType) => void;
+  onEdit: (value: TaskType) => void;
 }
 
 export function DataTableRowActions({ row, onDelete, onEdit }: DataTableRowActionsProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const params = useParams();
 
   const taskId = row.original._id as string;
   const taskCode = row.original.taskCode;
-  const projectId = (row.original.project?._id as string) || (params.projectId as string) || "";
 
   return (
     <>
@@ -44,7 +41,7 @@ export function DataTableRowActions({ row, onDelete, onEdit }: DataTableRowActio
             className="cursor-pointer"
             onClick={() => {
               setMenuOpen(false);
-              onEdit(projectId, taskId, row.original);
+              onEdit(row.original);
             }}>
             Edit Task
           </DropdownMenuItem>
