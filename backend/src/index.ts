@@ -40,7 +40,7 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: ["https://team-sync-m8jg.onrender.com"],
+    origin: config.FRONTEND_ORIGIN,
     credentials: true,
   })
 );
