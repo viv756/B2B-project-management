@@ -45,6 +45,8 @@ app.use(
   })
 );
 
+app.options("*", cors());
+
 app.get(
   `/`,
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
