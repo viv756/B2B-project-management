@@ -23,7 +23,7 @@ import { Separator } from "@/components/ui/separator";
 interface DataTableFacetedFilterProps {
   title?: string;
   options: {
-    label: string | JSX.Element;
+    label: string | React.JSX.Element;
     value: string;
     icon?: React.ComponentType<{ className?: string }> | any;
   }[];
