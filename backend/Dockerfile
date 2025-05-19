@@ -1,7 +1,7 @@
 # Base image with Node
 FROM node:18-alpine
 
-# Create app directory
+ # Create app directory
 WORKDIR /app
 
 # Install dependencies
