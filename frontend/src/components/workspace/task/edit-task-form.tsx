@@ -38,10 +38,7 @@ import { cn } from "@/lib/utils";
 import { getAvatarColor, getAvatarFallbackText, transformOptions } from "@/lib/helper";
 import { TaskType } from "@/types/api.types";
 
-const EditTaskForm = (props: {
-  task: TaskType;
-  onClose: () => void;
-}) => {
+const EditTaskForm = (props: { task: TaskType; onClose: () => void }) => {
   const { onClose, task } = props;
 
   const workspaceId = useWorkspaceId();
