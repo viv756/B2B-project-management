@@ -2,7 +2,8 @@ import axios from "axios";
 import { CustomError } from "@/types/custom-error.type";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
-console.log(baseURL,"baseurl");
+console.log(baseURL, "baseurl");
+console.log("ENV", import.meta.env);
 
 const options = {
   baseURL,
