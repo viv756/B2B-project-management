@@ -5,7 +5,6 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 console.log(baseURL,"baseurl");
 
-
 const options = {
   baseURL,
   withCredentials: true,
