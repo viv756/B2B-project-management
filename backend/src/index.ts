@@ -45,6 +45,8 @@ app.use(
   })
 );
 
+console.log(config.FRONTEND_ORIGIN,"backend frontend");
+
 app.get(
   `/`,
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
