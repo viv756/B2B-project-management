@@ -7,8 +7,6 @@ import { NuqsAdapter } from "nuqs/adapters/react";
 
 import { Toaster } from "./components/ui/sonner.tsx";
 
-// Trigger rebuild
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryProvider>
