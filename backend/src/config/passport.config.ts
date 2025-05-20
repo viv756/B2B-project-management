@@ -8,7 +8,11 @@ import { Strategy as JwtStratergy, ExtractJwt, StrategyOptions } from "passport-
 import { config } from "./app.config";
 import { NotFoundException } from "../utils/appError";
 import { ProviderEnum } from "../enums/account-provider.enum";
-import { findUserByIdService, loginOrCreateAccountService, verifyUserService } from "../services/auth.service";
+import {
+  findUserByIdService,
+  loginOrCreateAccountService,
+  verifyUserService,
+} from "../services/auth.service";
 import { signJwtToken } from "../utils/jwt";
 
 passport.use(

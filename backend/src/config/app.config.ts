@@ -8,7 +8,7 @@ const appConfig = () => ({
   MONGO_URI: getEnv("MONGO_URI", ""),
 
   JWT_SECRET: getEnv("JWT_SECRET"),
- JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "1d") as SignOptions["expiresIn"],
+  JWT_EXPIRES_IN: getEnv("JWT_EXPIRES_IN", "1d") as SignOptions["expiresIn"],
 
   SESSION_SECRET: getEnv("SESSION_SECRET"),
   SESSION_EXPIRES_IN: getEnv("SESSION_EXPIRES_IN"),
