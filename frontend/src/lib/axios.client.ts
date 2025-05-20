@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CustomError } from "@/types/custom-error.type";
+import { useStore } from "@/store/store";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -12,6 +13,16 @@ const options = {
 // Create axios Instance
 const API = axios.create(options);
 
+API.interceptors.request.use((config) => {
+  
+  const accessToken = useStore.getState().accessToken;
+  if (accessToken) {
+    config.headers["Authorization"] = "Bearer " + accessToken;
+  }
+
+  return config;
+});
+
 API.interceptors.response.use(
   (response) => {
     // Any status code that lie within the range of 2xx cause this function to trigger
@@ -21,11 +32,11 @@ API.interceptors.response.use(
   async (error) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    const { data, status } = error.response;
+    const { data } = error.response;
 
-    if (data === "Unauthorized" && status === 401) {
-      window.location.href = "/";
-    }
+    // if (data === "Unauthorized" && status === 401) {
+    //   window.location.href = "/";
+    // }
 
     const customError: CustomError = {
       ...error,

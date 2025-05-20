@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 
 import { logoutMutationFn } from "@/lib/api";
+import { useStore } from "@/store/store";
 
 const LogoutDialog = (props: {
   isOpen: boolean;
@@ -24,6 +25,7 @@ const LogoutDialog = (props: {
 }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { clearAccessToken } = useStore();
   const { isOpen, setIsOpen } = props;
 
   const { mutate, isPending } = useMutation({
@@ -33,6 +35,7 @@ const LogoutDialog = (props: {
         queryKey: ["authUser"],
       });
       setIsOpen(false);
+      clearAccessToken();
       navigate("/");
     },
     onError: (error) => {
