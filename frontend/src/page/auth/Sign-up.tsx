@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
+import { Loader } from "lucide-react";
 
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
 import Logo from "@/components/logo";
@@ -154,11 +155,8 @@ const SignUp = () => {
                           )}
                         />
                       </div>
-                      <Button
-                        type="submit"
-                        // disabled={isPending}
-                        className="w-full">
-                        {/* {isPending && <Loader className="animate-spin" />} */}
+                      <Button type="submit" disabled={isPending} className="w-full">
+                        {isPending && <Loader className="animate-spin" />}
                         Sign up
                       </Button>
                     </div>
