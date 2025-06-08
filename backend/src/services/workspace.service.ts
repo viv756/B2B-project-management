@@ -175,7 +175,7 @@ export const deleteWorkspaceService = async (userId: string, workspaceId: string
     }
 
     // check the user is the owner
-    if (workspace.owner.toString() !== userId) {
+    if (workspace.owner.toString() !== userId.toString()) {
       throw new BadRequestException("You are not authorized to delete this workspace");
     }
 
