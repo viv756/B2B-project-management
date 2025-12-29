@@ -14,6 +14,9 @@ A **full-stack B2B project management platform** designed to help teams plan, tr
 - [Docker Support](#docker-support-)
 - [Configuration](#configuration-)
 - [Project Structure](#project-structure-)
+- [API Reference](#api-reference-)
+- [Contributing](#contributing-)
+- [License](#license-)
 - [Contact](#contact-)
 
 ---
@@ -158,18 +161,28 @@ Create a .env file in the root or backend directory.
 ### Backend .env
 
 ```
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/project_management
-JWT_SECRET=your_jwt_secret
-CLIENT_URL=http://localhost:3000
+PORT=8000
+NODE_ENV=development
+
+MONGO_URI=your_mongo_uri
+
+JWT_SECRET ="your_jwt_secret-key"
+JWT_EXPIRES_IN ="1d"
+
+SESSION_SECRET="your_session_secret_key"
+SESSION_EXPIRES_IN="1d"
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:8000/api/auth/google/callback
+
+FRONTEND_ORIGIN=http://localhost:5173
+FRONTEND_GOOGLE_CALLBACK_URL=http://localhost:5173/google/oauth/callback
 ```
 
 ### Frontend .env
 ```
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/project_management
-JWT_SECRET=your_jwt_secret
-CLIENT_URL=http://localhost:3000
+VITE_API_BASE_URL = http://localhost:8000/api
 ```
 ## 📁 Project Structure
 
